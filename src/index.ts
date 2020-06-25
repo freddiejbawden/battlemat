@@ -1,5 +1,6 @@
 import express from "express";
 import cookieParser from 'cookie-parser';
+import path from 'path';
 import session from 'express-session';
 import io from 'socket.io';
 
@@ -18,10 +19,19 @@ if (app.get('env') === 'development') {
   app.use(sessionMiddleware);
 }
 
+app.use(express.static(path.join(__dirname, 'client/build')));
+
+app.get('/api/getList', (req,res) => {
+  const list = ["item1", "item2", "item3"];
+  res.json(list);
+  // tslint:disable-next-line:no-console
+  console.log('Sent list of items');
+});
+
 app.get('/', (req, res) => {
   // tslint:disable-next-line:no-console
   console.log(req.sessionID);
-  res.sendFile(__dirname + '/public/page.html');
+  res.sendFile(path.join(__dirname+'/client/build/index.html'));
 })
 
 const server = app.listen(port, () => {
