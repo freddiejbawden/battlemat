@@ -12,7 +12,6 @@ class Camera {
       const {x,y} = data;
       this.data.x += x * this.data.speed;
       this.data.y += y * this.data.speed;
-      console.log('move');
     });  
   }
   

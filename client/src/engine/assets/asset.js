@@ -1,6 +1,10 @@
-const ASSET_NAMES = ['ship.svg', 'bullet.svg'];
+const ASSET_NAMES = [
+  'token.svg',
+  'grid.svg'
+];
 
 const assets = {};
+
 const downloadPromise = Promise.all(ASSET_NAMES.map(downloadAsset));
 
 function downloadAsset(assetName) {
@@ -16,4 +20,5 @@ function downloadAsset(assetName) {
 }
 
 export const downloadAssets = () => downloadPromise;
+
 export const getAsset = assetName => assets[assetName];

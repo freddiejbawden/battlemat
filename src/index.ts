@@ -20,7 +20,7 @@ if (app.get('env') === 'development') {
 }
 
 app.use(express.static(path.join(__dirname, 'client/build')));
-
+app.use(express.static('public'));
 app.get('/api/getList', (req,res) => {
   const list = ["item1", "item2", "item3"];
   res.json(list);

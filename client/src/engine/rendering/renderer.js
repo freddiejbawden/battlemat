@@ -15,14 +15,16 @@ const renderEntity = (entity) => {
     y: (entity.position.y - camera.data.y) 
   };
   // add a check here to see if it needs to be rendered
-  ctx.beginPath();
-  ctx.arc(
-    relativePosition.x + canvas.width / 2,
-    relativePosition.y + canvas.height / 2,
-    50, 
-    0, 
-    2 * Math.PI);
-  ctx.stroke(); 
+  ctx.save();
+  ctx.translate(relativePosition.x + canvas.width / 2, relativePosition.y + canvas.height / 2);
+  ctx.drawImage(
+    getAsset('token.svg'),
+    -50,
+    -50,
+    50 * 2,
+    50 * 2,
+  );
+  ctx.restore();
 }
 
 export const render = () => {

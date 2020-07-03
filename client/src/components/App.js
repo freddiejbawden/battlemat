@@ -5,6 +5,7 @@ import {Engine} from '../engine/engine';
 const App = () => {
   useEffect(() => {
     let e = new Engine();
+    e.start();
   });
 
   const listener = EventManager.registerListener('event-test', () => {
