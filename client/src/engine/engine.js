@@ -29,7 +29,6 @@ export class Engine {
     if (isKeyDown(83)) {
       movement.y += -1 
     }
-    console.log(movement);
     EventManager.triggerEvent('camera-move', movement)
   }
 }

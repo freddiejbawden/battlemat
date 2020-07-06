@@ -5,11 +5,61 @@ import camera from './camera'
 
 
 
-const renderEntity = (entity) => {
-  const canvas = document.getElementById('grid-canvas');
-  const ctx = canvas.getContext('2d');
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+
+
+const renderGrid = (ctx, canvas) => {
+  const gridSize = 100
+  const offset = {
+    x: camera.data.x % gridSize,
+    y: camera.data.y % gridSize
+  }
+  const gridImageSize = 500
+
+  // place coregrid
+  const drawGrid = (x,y) => {
+    ctx.save();
+    ctx.translate(-x + canvas.width / 2, -y + canvas.height / 2);
+    ctx.drawImage(
+      getAsset('grid.svg'),
+      -gridImageSize/2,
+      -gridImageSize/2,
+      gridImageSize,
+      gridImageSize,
+    );
+    ctx.restore();
+  }
+  
+  const renderRow = (y) => {
+     // how many do we need either side? 
+     drawGrid(offset.x, y)
+    if (gridImageSize < canvas.width) {
+     const additionalGridCount = Math.ceil(canvas.width / gridImageSize);
+     for (let i = 0; i < additionalGridCount; i+=1) {
+       drawGrid(offset.x - (gridImageSize * (i + 1)), y)  
+     }
+     for (let i = 0; i < additionalGridCount; i+=1) {
+       drawGrid(offset.x + (gridImageSize * (i + 1)), y)  
+     }
+    }
+  }
+
+  // span horizontally
+  renderRow(offset.y)
+  if (gridImageSize < canvas.height) {
+    const additionalGridCount = Math.ceil(canvas.height / gridImageSize);
+    for (let i = 0; i < additionalGridCount; i+=1) {
+      renderRow(offset.y - (gridImageSize * (i + 1)))
+    }
+    for (let i = 0; i < additionalGridCount; i+=1) {
+      renderRow(offset.y + (gridImageSize * (i + 1)))
+    }
+  }
+
+
+}
+
+const renderEntity = (entity,ctx, canvas) => {
+ 
   const relativePosition = {
     x: (entity.position.x - camera.data.x),
     y: (entity.position.y - camera.data.y) 
@@ -18,27 +68,37 @@ const renderEntity = (entity) => {
   ctx.save();
   ctx.translate(relativePosition.x + canvas.width / 2, relativePosition.y + canvas.height / 2);
   ctx.drawImage(
-    getAsset('token.svg'),
-    -50,
-    -50,
-    50 * 2,
-    50 * 2,
+    getAsset(entity.sprite),
+    -entity.size,
+    -entity.size,
+    entity.size * 2,
+    entity.size * 2,
   );
   ctx.restore();
 }
 
 export const render = () => {
+
+  const canvas = document.getElementById('grid-canvas');
+  if (!canvas) return
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const ctx = canvas.getContext('2d');
   // const { camera, entities } = getCurrentState();
   // draw sample token
+  renderGrid(ctx,canvas);
   let entities = [
     {
-      position:{
-        x: 0,
-        y: 0
-      }
-    }
+      name: 'Token 1',
+      sprite: 'token.svg',
+      position :{
+        x: 25,
+        y: 25
+      },
+      size: 20,
+    },  
   ]
   entities.forEach(entity => {
-    renderEntity(entity);  
+    renderEntity(entity,ctx,canvas);  
   });
 }
