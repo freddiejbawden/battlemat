@@ -6,13 +6,20 @@ class Camera {
       x: 0,
       y: 0,
       zoom: 1,
-      speed: 5
-    }
-    EventManager.registerListener('camera-move', (data) => {
-      const {x,y} = data;
-      this.data.x += x * this.data.speed;
-      this.data.y += y * this.data.speed;
-    });  
+
+    }    
+  }
+  get x() {
+    return this.data.x;
+  }
+  get y() {
+    return this.data.y;
+  }
+  updatePosition(data) {
+    console.log(data.x, data.y)
+    const {x,y} = data;
+    this.data.x = x;
+    this.data.y = y;
   }
   
 }

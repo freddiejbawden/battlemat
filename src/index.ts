@@ -54,9 +54,23 @@ sio.sockets.on('connection', (socket) => {
   const hs = socket.request.session.id;
   // tslint:disable-next-line:no-console
   console.log(`A socket connected with id ${hs}`);
+  socket.on('update-entity', (data: EntityUpdate) => {
+    // tslint:disable-next-line:no-console
+    console.log('hit')
+    g.updateEntity(data.id, data.x, data.y);
+  })
+
   g.addPlayer(socket)
 
 });
+
+interface EntityUpdate {
+  id: string,
+  x: number,
+  y: number,
+}
+
+
 
 setInterval(() => {
   g.update();

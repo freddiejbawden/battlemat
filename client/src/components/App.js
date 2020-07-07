@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import EventManager from '../engine/eventManager';
-import {Engine} from '../engine/engine';
+import engine from '../engine/engine';
+import load from '../game/game'
 const App = () => {
   useEffect(() => {
-    let e = new Engine();
-    e.start();
+    load();
+    engine.start();
   });
 
   const listener = EventManager.registerListener('event-test', () => {
