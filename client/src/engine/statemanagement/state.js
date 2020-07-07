@@ -2,7 +2,7 @@ import { isContinueStatement } from "typescript";
 
 const RENDER_DELAY  = 100; // 100 ms between the clients and server time
 
-const gameUpdateQueue = [];
+const gameUpdates = [];
 let gameStart = 0;
 let firstServerTimestamp = 0;
 
@@ -57,9 +57,9 @@ export const getCurrentState = () => {
     const baseUpdate = gameUpdates[base];
     const next = gameUpdates[base + 1];
     const r = (serverTime - baseUpdate.t) / (next.t - baseUpdate.t);
+    // TODO: update this to interpolate
     return {
-      camera: interpolateCamera(baseUpdate.camera, next.camera, r),
-      entities: interpolateObjectArray(baseUpdate.entities, next.entities, r),
+      entities: baseUpdate.entities,
     }
   }
 };

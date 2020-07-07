@@ -2,12 +2,15 @@ import {startCapturingInput, isKeyDown} from './input/input'
 import EventManager from './eventManager'
 import { render } from '../engine/rendering/renderer'
 import { downloadAssets } from '../engine/assets/asset'
+import { connectToServer } from '../engine/networking/networking'
+
 export class Engine {
   constructor() {
     startCapturingInput();
     
   }
   async start() {
+    connectToServer();
     await downloadAssets();
     setInterval(() => {
       this.update();

@@ -4,6 +4,8 @@ import path from 'path';
 import session from 'express-session';
 import io from 'socket.io';
 
+import Game from './game/game'
+
 const app = express();
 const port = process.env.PORT || 8080;
 const verbose = false;
@@ -39,15 +41,24 @@ const server = app.listen(port, () => {
   console.log(`server started on ${port}`)
 })
 
+const g = new Game()
+
 const sio = io.listen(server);
 
 sio.use((socket, next) => {
   sessionMiddleware(socket.request, socket.request.res, next);
 });
 
+// move this
 sio.sockets.on('connection', (socket) => {
   const hs = socket.request.session.id;
   // tslint:disable-next-line:no-console
   console.log(`A socket connected with id ${hs}`);
+  g.addPlayer(socket)
+
 });
+
+setInterval(() => {
+  g.update();
+}, 1000 / 30)
 

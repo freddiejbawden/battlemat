@@ -1,8 +1,7 @@
 import { getAsset } from '../assets/asset';
 import { Vector } from '../math/vector'
 import camera from './camera'
-
-
+import { getCurrentState } from '../statemanagement/state'
 
 
 
@@ -87,18 +86,10 @@ export const render = () => {
   // const { camera, entities } = getCurrentState();
   // draw sample token
   renderGrid(ctx,canvas);
-  let entities = [
-    {
-      name: 'Token 1',
-      sprite: 'token.svg',
-      position :{
-        x: 25,
-        y: 25
-      },
-      size: 20,
-    },  
-  ]
-  entities.forEach(entity => {
-    renderEntity(entity,ctx,canvas);  
-  });
+  let update = getCurrentState();
+  if(update.entities) {
+    Object.keys(update.entities).forEach(entityKey => {
+      renderEntity(update.entities[entityKey],ctx,canvas);  
+    });
+  }
 }
