@@ -56,12 +56,10 @@ sio.sockets.on('connection', (socket) => {
   console.log(`A socket connected with id ${hs}`);
   socket.on('update-entity', (data: EntityUpdate) => {
     // tslint:disable-next-line:no-console
-    console.log('hit')
     g.updateEntity(data.id, data.x, data.y);
   })
 
   g.addPlayer(socket)
-
 });
 
 interface EntityUpdate {
@@ -69,7 +67,6 @@ interface EntityUpdate {
   x: number,
   y: number,
 }
-
 
 
 setInterval(() => {

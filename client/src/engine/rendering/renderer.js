@@ -2,15 +2,14 @@ import { getAsset } from '../assets/asset';
 import { Vector } from '../math/vector'
 import camera from './camera'
 import { getCurrentState } from '../statemanagement/state'
+import engine from '../engine'
 
-
-
+export const GRID_SIZE = 100
 
 const renderGrid = (ctx, canvas) => {
-  const gridSize = 100
   const offset = {
-    x: camera.data.x % gridSize,
-    y: camera.data.y % gridSize
+    x: camera.data.x % GRID_SIZE,
+    y: camera.data.y % GRID_SIZE
   }
   const gridImageSize = 500
 
@@ -58,7 +57,9 @@ const renderGrid = (ctx, canvas) => {
 }
 
 const renderEntity = (entity,ctx, canvas) => {
- 
+  if (!entity.sprite) {
+    return;
+  }
   const relativePosition = {
     x: (entity.position.x - camera.data.x),
     y: (entity.position.y - camera.data.y) 
@@ -83,13 +84,11 @@ export const render = () => {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   const ctx = canvas.getContext('2d');
-  // const { camera, entities } = getCurrentState();
+  getCurrentState();
   // draw sample token
   renderGrid(ctx,canvas);
-  let update = getCurrentState();
-  if(update.entities) {
-    Object.keys(update.entities).forEach(entityKey => {
-      renderEntity(update.entities[entityKey],ctx,canvas);  
-    });
-  }
+  Object.keys(engine.getGameObjects()).forEach(id => {
+    renderEntity(engine.getGameObject(id),ctx,canvas);  
+  });
+  
 }

@@ -5,25 +5,35 @@ import { downloadAssets } from '../engine/assets/asset'
 import { connectToServer } from '../engine/networking/networking'
 class Engine {
   constructor() {
-    this.gameObjects = [];
+    this.gameObjects = {};
     startCapturingInput();
-    
   }
 
-  registerGameObject(go) {
-    // type check?
-    this.gameObjects.push(go);
+  registerGameObject(id, go) {
+    if (!this.gameObjects[id]) {
+      this.gameObjects[id] =go;
+    } else {
+      console.log(`game object with ${id} already exists`)
+    }
   }
 
-  removeGameObject(go) {
-    delete this.gameObjects[this.gameObjects.indexOf(go)];
+  removeGameObject(id) {
+    delete this.gameObjects[id];
+  }
+
+  getGameObject(id) {
+    return this.gameObjects[id]
+  }
+
+  getGameObjects() {
+    return this.gameObjects
   }
 
   async start() {
     connectToServer();
     await downloadAssets();
-    this.gameObjects.forEach(gameObject => {
-      gameObject.update();
+    Object.keys(this.gameObjects).forEach(id => {
+      this.getGameObject(id).update();
     })
     setInterval(() => {
       this.update();
@@ -31,8 +41,8 @@ class Engine {
     }, 1000/30);
   }
   update() {
-   this.gameObjects.forEach(gameObject => {
-     gameObject.update();
+   Object.keys(this.gameObjects).forEach(id => {
+     this.getGameObject(id).update();
    })
   }
 }

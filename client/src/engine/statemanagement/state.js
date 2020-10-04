@@ -1,4 +1,6 @@
-import { isContinueStatement } from "typescript";
+import engine from '../engine'
+import GameObject from '../gameObject';
+import Token from '../../game/token'
 
 const RENDER_DELAY  = 100; // 100 ms between the clients and server time
 
@@ -57,9 +59,21 @@ export const getCurrentState = () => {
     const baseUpdate = gameUpdates[base];
     const next = gameUpdates[base + 1];
     const r = (serverTime - baseUpdate.t) / (next.t - baseUpdate.t);
-    // TODO: update this to interpolate
-    return {
-      entities: baseUpdate.entities,
-    }
+
+    const entities = baseUpdate.entities;
+    Object.keys(baseUpdate.entities).forEach((id) => {
+      let gameObject = engine.getGameObject(id)
+      if (!gameObject) {
+        if (entities[id].type == 'token') {
+          gameObject = new Token(id);
+        } else {
+          gameObject = new GameObject(id);
+        }
+      }
+      
+      gameObject.position = entities[id].position
+      gameObject.size = entities[id].size
+      gameObject.sprite = entities[id].sprite
+    })
   }
 };

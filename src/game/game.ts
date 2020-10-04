@@ -2,7 +2,8 @@ interface Entity {
   name: string,
   sprite: string,
   position: {x: number, y: number},
-  size: number
+  size: number,
+  type: string
 }
 
 class Game {
@@ -13,6 +14,7 @@ class Game {
     this.lastUpdateTime = Date.now();
     this.entities = {'tokenAD': {
       name: 'Token 1',
+      type: 'token',
       sprite: 'token.svg', // convert to static thing
       position: {x: 25, y:25},
       size: 20}

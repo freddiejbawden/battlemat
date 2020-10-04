@@ -3,10 +3,9 @@ import EventManager from '../eventManager';
 class Camera { 
   constructor() {
     this.data = {
-      x: 0,
-      y: 0,
+      x: 25,
+      y: 25,
       zoom: 1,
-
     }    
   }
   get x() {
@@ -16,7 +15,6 @@ class Camera {
     return this.data.y;
   }
   updatePosition(data) {
-    console.log(data.x, data.y)
     const {x,y} = data;
     this.data.x = x;
     this.data.y = y;

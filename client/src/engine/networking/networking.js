@@ -8,7 +8,6 @@ export const socket = io(`ws://${window.location.host}`);
 export const connectToServer = () => socket.on('connect', () => {
     console.log('connected');
     socket.on('game-update', processMapUpdate)
-
 })
 
 
