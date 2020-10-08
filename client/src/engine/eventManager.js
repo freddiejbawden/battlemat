@@ -7,6 +7,7 @@ export default {
         console.error(`Event ${event} has already been registered`)
         return;  
       } 
+      console.log(`registered ${event}`)
       listeners[event] = [];
     },
   

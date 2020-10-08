@@ -65,7 +65,8 @@ export const getCurrentState = () => {
       let gameObject = engine.getGameObject(id)
       if (!gameObject) {
         if (entities[id].type == 'token') {
-          gameObject = new Token(id);
+
+          gameObject = new Token(id,entities[id].position.x,entities[id].position.y);
         } else {
           gameObject = new GameObject(id);
         }

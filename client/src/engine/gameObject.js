@@ -19,7 +19,10 @@ export default class GameObject {
   start() {
      
   }
-  click() {
+  mouseDown() {
+    return false;
+  }
+  mouseUp() {
     return false;
   }
 }

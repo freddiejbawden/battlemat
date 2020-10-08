@@ -15,6 +15,7 @@ class Engine {
     } else {
       console.log(`game object with ${id} already exists`)
     }
+    go.start()
   }
 
   removeGameObject(id) {
@@ -33,7 +34,7 @@ class Engine {
     connectToServer();
     await downloadAssets();
     Object.keys(this.gameObjects).forEach(id => {
-      this.getGameObject(id).update();
+      this.getGameObject(id).start();
     })
     setInterval(() => {
       this.update();
