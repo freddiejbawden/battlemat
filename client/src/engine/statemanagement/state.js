@@ -13,7 +13,7 @@ export const initState = () => {
    firstServerTimestamp = 0;
 }
 
-export const processMapUpdate = (update) => { 
+export const processMapUpdate = (update) => {
   if (!firstServerTimestamp) {
     firstServerTimestamp = update.t;
     gameStart = Date.now();

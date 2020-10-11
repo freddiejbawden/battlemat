@@ -66,7 +66,7 @@ const renderEntity = (entity,ctx, canvas) => {
   };
   // add a check here to see if it needs to be rendered
   ctx.save();
-  ctx.translate(relativePosition.x + canvas.width / 2, relativePosition.y + canvas.height / 2);
+  ctx.translate(relativePosition.x*GRID_SIZE/2 + canvas.width / 2, relativePosition.y*GRID_SIZE/2 + canvas.height / 2);
   ctx.drawImage(
     getAsset(entity.sprite),
     -entity.size,
