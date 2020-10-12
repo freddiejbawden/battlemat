@@ -4,7 +4,7 @@ import path from 'path';
 import session from 'express-session';
 import io from 'socket.io';
 
-import Game from './game/game'
+import Game, { Entity } from './game/game'
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -57,6 +57,10 @@ sio.sockets.on('connection', (socket) => {
   socket.on('update-entity', (data: EntityUpdate) => {
     // tslint:disable-next-line:no-console
     g.updateEntity(data.id, data.x, data.y);
+  })
+  socket.on('add-entity', (entityId: string, entity: Entity) => {
+    // tslint:disable-next-line:no-console
+    g.addEntity(entityId, entity);
   })
 
   g.addPlayer(socket)

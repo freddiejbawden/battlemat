@@ -1,4 +1,4 @@
-interface Entity {
+export interface Entity {
   name: string,
   sprite: string,
   position: {x: number, y: number},
@@ -26,6 +26,14 @@ class Game {
       this.sockets = {}
     }
     this.sockets[socket.id] = socket;
+  }
+
+  addEntity(entityId: string, entity: Entity) {
+    // tslint:disable-next-line: no-console
+    console.log(entityId)
+    // tslint:disable-next-line: no-console
+    console.log(entity)
+    this.entities[entityId] = entity;
   }
 
   updateEntity(entityID: string, newX: number, newY:number) {

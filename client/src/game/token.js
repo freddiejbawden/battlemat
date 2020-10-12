@@ -6,7 +6,6 @@ import {createEntityUpdate} from '../engine/networking/networking'
 export default class Token extends GameObject {
   constructor(id, x, y, sprite, size) {
     super(id,x,y,sprite,size);
-    console.log(`id: ${this.id}`)
     this.isMouseDown = false;
   }
 
@@ -15,11 +14,14 @@ export default class Token extends GameObject {
     eventManager.registerListener('mouseupgrid', (pos) => this.mouseUp(pos))
   }
   mouseDown(pos) {
-    this.isMouseDown = true;
+    if (pos.x === this.position.x && pos.y === this.position.y) {
+      this.isMouseDown = true;
+    }
   } 
   
   mouseUp() {
-    createEntityUpdate(this.id, getMousePosition().x, getMousePosition().y)
+    this.isMouseDown && createEntityUpdate(this.id, getMousePosition().x, getMousePosition().y)
+    this.isMouseDown = false;
   }
 
   update() {

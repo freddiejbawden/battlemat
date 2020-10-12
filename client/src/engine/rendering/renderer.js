@@ -11,7 +11,6 @@ const renderGrid = (ctx, canvas) => {
     x: ((camera.data.x*GRID_SIZE/2 - GRID_SIZE/4) % GRID_SIZE),
     y: ((camera.data.y*GRID_SIZE/2 - GRID_SIZE/4) % GRID_SIZE) 
   }
-  console.log(offset)
   const gridImageSize = 500
 
   // place coregrid
