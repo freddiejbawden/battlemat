@@ -4,7 +4,7 @@ import { isKeyDown } from '../engine/input/input';
 export default class CameraMovement extends GameObject {
   constructor() {
     super();
-    this.speed = 5;
+    this.speed = 0.1;
   }
   update() {
     const movement = {x:0, y:0}

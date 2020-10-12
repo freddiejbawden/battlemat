@@ -8,9 +8,10 @@ export const GRID_SIZE = 100
 
 const renderGrid = (ctx, canvas) => {
   const offset = {
-    x: camera.data.x % GRID_SIZE,
-    y: camera.data.y % GRID_SIZE
+    x: ((camera.data.x*GRID_SIZE/2 - GRID_SIZE/4) % GRID_SIZE),
+    y: ((camera.data.y*GRID_SIZE/2 - GRID_SIZE/4) % GRID_SIZE) 
   }
+  console.log(offset)
   const gridImageSize = 500
 
   // place coregrid
@@ -62,7 +63,7 @@ const renderEntity = (entity,ctx, canvas) => {
   }
   const relativePosition = {
     x: (entity.position.x - camera.data.x),
-    y: (entity.position.y - camera.data.y) 
+    y: (entity.position.y - camera.data.y)
   };
   // add a check here to see if it needs to be rendered
   ctx.save();

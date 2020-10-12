@@ -11,17 +11,14 @@ export default class Token extends GameObject {
   }
 
   start() {
-    console.log('token start')
     eventManager.registerListener('mousedowngrid', (pos) => this.mouseDown(pos))
     eventManager.registerListener('mouseupgrid', (pos) => this.mouseUp(pos))
   }
   mouseDown(pos) {
-    console.log(`mouse down on ${this.id} at pos ${pos.x}`)
     this.isMouseDown = true;
   } 
   
   mouseUp() {
-    console.log(`mouse up ${getMousePosition().x} ${getMousePosition().y}`)
     createEntityUpdate(this.id, getMousePosition().x, getMousePosition().y)
   }
 
