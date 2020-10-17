@@ -2,7 +2,7 @@ import engine from '../engine'
 import GameObject from '../gameObject';
 import Token from '../../game/token'
 
-const RENDER_DELAY  = 100; // 100 ms between the clients and server time
+const RENDER_DELAY = 100; // 100 ms between the clients and server time
 
 const gameUpdates = [];
 let gameStart = 0;
@@ -59,22 +59,31 @@ export const getCurrentState = () => {
     const baseUpdate = gameUpdates[base];
     const next = gameUpdates[base + 1];
     const r = (serverTime - baseUpdate.t) / (next.t - baseUpdate.t);
-
-    const entities = baseUpdate.entities;
+    const entitiesBase = baseUpdate.entities;
+    const entitiesNext = next.entities
     Object.keys(baseUpdate.entities).forEach((id) => {
       let gameObject = engine.getGameObject(id)
+      const iterPosition = (r > 0) ? entitiesNext[id].position : entitiesBase[id].position
       if (!gameObject) {
-        if (entities[id].type == 'token') {
-
-          gameObject = new Token(id,entities[id].position.x,entities[id].position.y);
+        if (entitiesBase[id].type == 'token') {
+          gameObject = new Token(id,iterPosition.x,iterPosition.y);
         } else {
           gameObject = new GameObject(id);
         }
       }
-      
-      gameObject.position = entities[id].position
-      gameObject.size = entities[id].size
-      gameObject.sprite = entities[id].sprite
+
+      if (gameObject.updatePosition) {
+        gameObject.position = iterPosition
+      }
+      gameObject.size = entitiesBase[id].size
+      gameObject.sprite = entitiesBase[id].sprite
     })
   }
 };
+
+const interpolatePosition = (pos1, pos2, ratio) => {
+  return {
+    x: pos1.x + (pos2.x - pos1.x)/ratio,
+    y: pos1.y + (pos2.y - pos1.y)/ratio
+  }
+}

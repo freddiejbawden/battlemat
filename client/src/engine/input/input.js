@@ -17,6 +17,7 @@ const mouseDownHandler = (e) => {
   eventManager.triggerEvent('mousedowngrid', mousePositionToGrid(e.clientX, e.clientY));
 }
 
+
 const mouseUpHandler = (e) => {
   eventManager.triggerEvent('mouseupgrid', mousePositionToGrid(e.clientX, e.clientY));
 }
@@ -25,20 +26,21 @@ const mouseMoveHandler = (e) => {
   currrentMousePosition = mousePositionToGrid(e.clientX,e.clientY)
 }
 
-export const getMousePosition = () => {
-  return currrentMousePosition
-}
 
 export const isKeyDown = (key) => {
   return (key in down);
+}
+
+export const getMousePosition = () => {
+  return currrentMousePosition;
 }
 
 const mousePositionToGrid = (screenX, screenY) => {
   const xLim = camera.data.x - window.innerWidth / GRID_SIZE;
   const yLim = camera.data.y - window.innerHeight / GRID_SIZE;
   return {
-    x: Math.floor(xLim + screenX*2 / GRID_SIZE + 0.5 ),
-    y: Math.floor(yLim + screenY*2 / GRID_SIZE + 0.5)
+    x: xLim + screenX*2 / GRID_SIZE + 0.5,
+    y: yLim + screenY*2 / GRID_SIZE + 0.5
   }
 }
 

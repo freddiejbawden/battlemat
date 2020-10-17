@@ -8,6 +8,7 @@ export default class GameObject {
     this.position = {x: x||0, y:y||0}
     this.sprite = sprite;
     this.size = size;
+    this.updatePosition = true;
     engine.registerGameObject(this.id, this);
   }
   destroy() {

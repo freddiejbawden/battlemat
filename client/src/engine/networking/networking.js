@@ -15,6 +15,6 @@ export const addEntity = (id,entity) => {
   socket.emit('add-entity', id, entity)
 }
 
-export const createEntityUpdate = (id,x,y) => {
+export const createEntityUpdate = (id,x,y, size) => {
   socket.emit('update-entity', {id, x,y})
 }
