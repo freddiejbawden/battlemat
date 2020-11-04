@@ -1,8 +1,7 @@
 import GameObject from '../engine/gameObject'
 import Camera from '../engine/rendering/camera'
 import { isKeyDown } from '../engine/input/input';
-import { uuidv4 } from '../utils';
-import {addEntity} from '../engine/networking/networking'
+
 export default class CameraMovement extends GameObject {
   constructor() {
     super();

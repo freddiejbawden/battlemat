@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import Fab from '@material-ui/core/Fab';
 import './App.css';
 import EventManager from '../engine/eventManager';
 import engine from '../engine/engine';
 import load from '../game/game'
+import { Grommet } from 'grommet';
+import ObjectTray from './ObjectTray';
+import theme from './theme'
 const App = () => {
   useEffect(() => {
     load();
@@ -17,10 +19,13 @@ const App = () => {
   EventManager.removeListener('event-test', listener);
   EventManager.triggerEvent('event-test');
   return (
-    <div className="App">
-       <canvas id="grid-canvas"></canvas>
-       <canvas id="tokens-canvas"></canvas>
-    </div>
+    <Grommet theme={theme}>
+      <div className="App">
+        <canvas id="grid-canvas"></canvas>
+        <canvas id="tokens-canvas"></canvas>
+        <ObjectTray />
+      </div>
+    </Grommet>
   );
 }
 

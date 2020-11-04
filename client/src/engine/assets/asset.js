@@ -1,6 +1,7 @@
 const ASSET_NAMES = [
   'token.svg',
-  'grid.svg'
+  'grid.svg',
+  'gridHighlight.svg'
 ];
 
 const assets = {};
