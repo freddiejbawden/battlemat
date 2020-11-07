@@ -8,7 +8,8 @@ The application uses a custom rendering engine based on a high level off of Unit
 
 ## Running 
 
-`npm i` 
+On first time running: `npm i` 
+
 `npm run dev` starts the server on localhost:5000 and the client on localhost:3000. 
 
 ## Project Goals
