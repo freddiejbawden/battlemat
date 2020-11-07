@@ -15,8 +15,8 @@ On first time running: `npm i`
 ## Project Goals
 
 - [x] Create a rendering engine to handle grid based play
-- [] Users can use simple tokens with uploaded images to represent enemies and players
-- [] Users can draw on the mat to create terrain (old school dungeon map style) 
-- [] Users can save and load battlemats
-- [] Allow for users to create rooms to silo battlemat into
+- [ ] Users can use simple tokens with uploaded images to represent enemies and players
+- [ ] Users can draw on the mat to create terrain (old school dungeon map style) 
+- [ ] Users can save and load battlemats
+- [ ] Allow for users to create rooms to silo battlemat into
 
