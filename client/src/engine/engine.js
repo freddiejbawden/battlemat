@@ -33,9 +33,9 @@ class Engine {
   async start() {
     connectToServer();
     await downloadAssets();
-    Object.keys(this.gameObjects).forEach(id => {
+    /* Object.keys(this.gameObjects).forEach(id => {
       this.getGameObject(id).start();
-    })
+    }) */
     setInterval(() => {
       this.update();
       render();

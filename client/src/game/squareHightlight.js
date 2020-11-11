@@ -19,12 +19,14 @@ export default class SquareHighlight extends GameObject {
   }
 
   mouseDown() {
-    this.show = false;
-    super.shouldRender = false;
-    eventManager.triggerEvent('place-token', {
-      x: Math.floor(getMousePosition().x), 
-      y: Math.floor(getMousePosition().y)
-    })
+    if (this.show) {
+      this.show = false;
+      super.shouldRender = false;
+      eventManager.triggerEvent('place-token', {
+        x: Math.floor(getMousePosition().x), 
+        y: Math.floor(getMousePosition().y)
+      })
+    }
   }
 
   update() {

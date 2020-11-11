@@ -1,7 +1,8 @@
 import eventManager from "../engine/eventManager";
 import GameObject from '../engine/gameObject'
+import { addEntity } from "../engine/networking/networking";
 import { uuidv4 } from "../utils";
-import Token from "./token";
+
 export default class TokenManager extends GameObject {
   
   constructor() {
@@ -9,9 +10,18 @@ export default class TokenManager extends GameObject {
   }
 
   addToken(pos) {
-    new Token(uuidv4(), pos.x, pos.y, 'token.svg', 20);
+    const id = uuidv4();
+    addEntity(id, {
+      name: id, 
+      position: pos,
+      type: 'token',
+      sprite: 'token.svg', 
+      size: 20
+    });
   }
+  
   start() {
+    console.log('start')
     eventManager.registerEvent('place-token');
     eventManager.registerListener('place-token', (pos) => this.addToken(pos))
   }
