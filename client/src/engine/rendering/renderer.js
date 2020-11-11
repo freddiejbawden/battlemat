@@ -88,7 +88,10 @@ export const render = () => {
   // draw sample token
   renderGrid(ctx,canvas);
   Object.keys(engine.getGameObjects()).forEach(id => {
-    renderEntity(engine.getGameObject(id),ctx,canvas);  
+    const go = engine.getGameObject(id);
+    if (go.shouldRender) {
+      renderEntity(go,ctx,canvas);  
+    }
   });
   
 }

@@ -1,8 +1,8 @@
 import {startCapturingInput, isKeyDown} from './input/input'
-import EventManager from './eventManager'
 import { render } from '../engine/rendering/renderer'
 import { downloadAssets } from '../engine/assets/asset'
 import { connectToServer } from '../engine/networking/networking'
+
 class Engine {
   constructor() {
     this.gameObjects = {};
@@ -33,9 +33,9 @@ class Engine {
   async start() {
     connectToServer();
     await downloadAssets();
-    Object.keys(this.gameObjects).forEach(id => {
+    /* Object.keys(this.gameObjects).forEach(id => {
       this.getGameObject(id).start();
-    })
+    }) */
     setInterval(() => {
       this.update();
       render();

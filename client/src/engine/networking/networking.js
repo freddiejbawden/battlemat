@@ -10,7 +10,6 @@ export const connectToServer = () => socket.on('connect', () => {
     socket.on('game-update', processMapUpdate)
 })
 
-
 export const addEntity = (id,entity) => {
   socket.emit('add-entity', id, entity)
 }
