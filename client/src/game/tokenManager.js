@@ -21,7 +21,6 @@ export default class TokenManager extends GameObject {
   }
   
   start() {
-    console.log('start')
     eventManager.registerEvent('place-token');
     eventManager.registerListener('place-token', (pos) => this.addToken(pos))
   }

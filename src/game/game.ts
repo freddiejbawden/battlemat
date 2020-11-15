@@ -3,7 +3,8 @@ export interface Entity {
   sprite: string,
   position: {x: number, y: number},
   size: number,
-  type: string
+  type: string,
+  sequenceNumber: number
 }
 
 class Game {
@@ -17,7 +18,8 @@ class Game {
       type: 'token',
       sprite: 'token.svg', // convert to static thing
       position: {x: 25, y:25},
-      size: 20}
+      size: 20,
+      sequenceNumber: 1}
     }
   }
 
@@ -36,8 +38,9 @@ class Game {
     this.entities[entityId] = entity;
   }
 
-  updateEntity(entityID: string, newX: number, newY:number) {
+  updateEntity(sequenceNumber: number, entityID: string, newX: number, newY:number) {
     if (this.entities[entityID]) {
+      this.entities[entityID].sequenceNumber = sequenceNumber
       this.entities[entityID].position = {x: newX, y: newY}
     }
   }
@@ -46,7 +49,6 @@ class Game {
   // this can be improved by logging the player's camera position and zoom,
   createUpdate() {
     return {
-      t: Date.now(),
       entities: this.entities
     }
   }

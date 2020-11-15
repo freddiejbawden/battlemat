@@ -1,53 +1,37 @@
 import engine from '../engine'
 import GameObject from '../gameObject';
 import Token from '../../game/token'
+import {emitToServer} from '../networking/networking'
 
-const RENDER_DELAY = 100; // 100 ms between the clients and server time
-
-const gameUpdates = [];
-let gameStart = 0;
-let firstServerTimestamp = 0;
-
-export const initState = () => {
-   gameStart = 0;
-   firstServerTimestamp = 0;
-}
-
-export const handleIncomingMessage = (update) => {
-  updateState(update)
-}
-
-const currentServerTime = () => {
-  return firstServerTimestamp + (Date.now() - gameStart) - RENDER_DELAY;
-}
-// Return the first update before the current server time
-const getBaseUpdate = () => {
-  const serverTime = currentServerTime();
-  for (let i = gameUpdates.length - 1; i >= 0; i--) {
-    if (gameUpdates[i].t <= serverTime) {
-      return i;
-    }
+export const createEntityUpdate = (update) => {
+  if (!update) {
+    console.warn("An update to the server was empty")
+    return
   }
-  return -1;
+  const {id,position,size} = update
+  updateState([update]);
+  emitToServer('update-entity', {id,position,size})
 }
 
-const updateState = (update) => {
-  const next = update
-  const entitiesNext = next.entities
-  Object.keys(entitiesNext).forEach((id) => {
+export const updateState = (entities) => {
+  entities.forEach((entity) => {
+    const id = entity.id
     let gameObject = engine.getGameObject(id)
-    const iterPosition = entitiesNext[id].position
     if (!gameObject) {
-      if (entitiesNext[id].type == 'token') {
-        gameObject = new Token(id,iterPosition.x,iterPosition.y);
+      if (entity.type == 'token') {
+        gameObject = new Token(id, entity.position.x, entity.position.y);
       } else {
         gameObject = new GameObject(id);
       }
     }
     if (gameObject.updatePosition) {
-      gameObject.position = iterPosition
+      gameObject.position = entity.position
     }
-    gameObject.size = entitiesNext[id].size
-    gameObject.sprite = entitiesNext[id].sprite
+    if (entity.size && gameObject.size !== entity.size) {
+      gameObject.size = entity.size
+    }
+    if (entity.sprite && gameObject.sprite !== entity.sprite) {
+      gameObject.sprite = entity.sprite
+    }
   })
 };

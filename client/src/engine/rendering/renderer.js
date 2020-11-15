@@ -1,7 +1,5 @@
 import { getAsset } from '../assets/asset';
-import { Vector } from '../math/vector'
 import camera from './camera'
-import { getCurrentState } from '../statemanagement/state'
 import engine from '../engine'
 
 export const GRID_SIZE = 100

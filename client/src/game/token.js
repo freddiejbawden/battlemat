@@ -1,7 +1,7 @@
 import eventManager from '../engine/eventManager';
 import GameObject from '../engine/gameObject'
 import { getMousePosition } from '../engine/input/input';
-import {createEntityUpdate} from '../engine/networking/networking'
+import {createEntityUpdate} from '../engine/statemanagement/state'
 
 export default class Token extends GameObject {
   constructor(id, x, y, sprite, size) {
@@ -20,7 +20,7 @@ export default class Token extends GameObject {
   } 
   
   mouseUp() {
-    this.isMouseDown && createEntityUpdate(this.id, Math.floor(getMousePosition().x), Math.floor(getMousePosition().y))
+    this.isMouseDown && createEntityUpdate({ id: this.id, position: {x: Math.floor(getMousePosition().x), y: Math.floor(getMousePosition().y) }})
     super.updatePosition = true;
     this.isMouseDown = false;
   }
@@ -31,7 +31,7 @@ export default class Token extends GameObject {
         x: getMousePosition().x - 0.5,
         y: getMousePosition().y - 0.5
       }
-      createEntityUpdate(this.id, newPosition.x, newPosition.y)
+      createEntityUpdate({id: this.id, position: {x: newPosition.x, y: newPosition.y}})
     }
   }
 }

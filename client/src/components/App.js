@@ -12,12 +12,6 @@ const App = () => {
     engine.start();
   }, []);
 
-  const listener = EventManager.registerListener('event-test', () => {
-    console.log('i heard  that!');
-  });
-  EventManager.triggerEvent('event-test');
-  EventManager.removeListener('event-test', listener);
-  EventManager.triggerEvent('event-test');
   return (
     <Grommet theme={theme}>
       <div className="App">
