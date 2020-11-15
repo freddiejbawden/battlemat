@@ -1,7 +1,5 @@
 import { getAsset } from '../assets/asset';
-import { Vector } from '../math/vector'
 import camera from './camera'
-import { getCurrentState } from '../statemanagement/state'
 import engine from '../engine'
 
 export const GRID_SIZE = 100
@@ -84,7 +82,6 @@ export const render = () => {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   const ctx = canvas.getContext('2d');
-  getCurrentState();
   // draw sample token
   renderGrid(ctx,canvas);
   Object.keys(engine.getGameObjects()).forEach(id => {
