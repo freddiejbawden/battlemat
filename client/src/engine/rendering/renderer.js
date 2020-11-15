@@ -84,7 +84,6 @@ export const render = () => {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   const ctx = canvas.getContext('2d');
-  getCurrentState();
   // draw sample token
   renderGrid(ctx,canvas);
   Object.keys(engine.getGameObjects()).forEach(id => {

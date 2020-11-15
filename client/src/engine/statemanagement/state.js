@@ -13,23 +13,13 @@ export const initState = () => {
    firstServerTimestamp = 0;
 }
 
-export const processMapUpdate = (update) => {
-  if (!firstServerTimestamp) {
-    firstServerTimestamp = update.t;
-    gameStart = Date.now();
-  }   
-  gameUpdates.push(update);
-
-  const base = getBaseUpdate();
-  if (base > 0) {
-    gameUpdates.splice(0,base);
-  }
+export const handleIncomingMessage = (update) => {
+  updateState(update)
 }
 
 const currentServerTime = () => {
   return firstServerTimestamp + (Date.now() - gameStart) - RENDER_DELAY;
 }
-
 // Return the first update before the current server time
 const getBaseUpdate = () => {
   const serverTime = currentServerTime();
@@ -41,49 +31,23 @@ const getBaseUpdate = () => {
   return -1;
 }
 
-export const getCurrentState = () => {
-  if (!firstServerTimestamp) {
-    return {};
-  }
-
-  const base = getBaseUpdate();
-  const serverTime = currentServerTime();
-
-  // if base is the most recnt update we hvae m use its state, else interploate between its state and the state of base + 1
-  if (base < 0) {
-    return gameUpdates[gameUpdates.length - 1];
-  } else if (base === gameUpdates.length - 1) {
-    // this is the latest we have
-    return gameUpdates[base];
-  } else {
-    const baseUpdate = gameUpdates[base];
-    const next = gameUpdates[base + 1];
-    const r = (serverTime - baseUpdate.t) / (next.t - baseUpdate.t);
-    const entitiesBase = baseUpdate.entities;
-    const entitiesNext = next.entities
-    Object.keys(baseUpdate.entities).forEach((id) => {
-      let gameObject = engine.getGameObject(id)
-      const iterPosition = (r > 0) ? entitiesNext[id].position : entitiesBase[id].position
-      if (!gameObject) {
-        if (entitiesBase[id].type == 'token') {
-          gameObject = new Token(id,iterPosition.x,iterPosition.y);
-        } else {
-          gameObject = new GameObject(id);
-        }
+const updateState = (update) => {
+  const next = update
+  const entitiesNext = next.entities
+  Object.keys(entitiesNext).forEach((id) => {
+    let gameObject = engine.getGameObject(id)
+    const iterPosition = entitiesNext[id].position
+    if (!gameObject) {
+      if (entitiesNext[id].type == 'token') {
+        gameObject = new Token(id,iterPosition.x,iterPosition.y);
+      } else {
+        gameObject = new GameObject(id);
       }
-
-      if (gameObject.updatePosition) {
-        gameObject.position = iterPosition
-      }
-      gameObject.size = entitiesBase[id].size
-      gameObject.sprite = entitiesBase[id].sprite
-    })
-  }
+    }
+    if (gameObject.updatePosition) {
+      gameObject.position = iterPosition
+    }
+    gameObject.size = entitiesNext[id].size
+    gameObject.sprite = entitiesNext[id].sprite
+  })
 };
-
-const interpolatePosition = (pos1, pos2, ratio) => {
-  return {
-    x: pos1.x + (pos2.x - pos1.x)/ratio,
-    y: pos1.y + (pos2.y - pos1.y)/ratio
-  }
-}
