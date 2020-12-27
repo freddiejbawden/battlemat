@@ -3,12 +3,9 @@ import { uuidv4 } from "../utils";
 
 
 export default class GameObject {
-  constructor(id, x,y,sprite,size,shouldRender=true) {
+  constructor(id,x,y,shouldRender=true) {
     this.id = id || uuidv4()
     this.position = {x: x||0, y:y||0}
-    this.sprite = sprite;
-    this.size = size;
-    this.updatePosition = true;
     this.shouldRender = shouldRender;
     engine.registerGameObject(this.id, this);
   }
@@ -26,5 +23,8 @@ export default class GameObject {
   }
   mouseUp() {
     return false;
+  }
+  render() {
+    console.warn('Base GameObject does not have a render method!')
   }
 }

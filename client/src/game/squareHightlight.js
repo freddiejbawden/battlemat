@@ -1,6 +1,6 @@
 import eventManager from "../engine/eventManager";
 import GameObject from '../engine/gameObject'
-import { getMousePosition } from '../engine/input/input';
+import { getMousePositionCentreGrid } from '../engine/input/input';
 
 export default class SquareHighlight extends GameObject {
   constructor() {
@@ -23,8 +23,8 @@ export default class SquareHighlight extends GameObject {
       this.show = false;
       super.shouldRender = false;
       eventManager.triggerEvent('place-token', {
-        x: Math.floor(getMousePosition().x), 
-        y: Math.floor(getMousePosition().y)
+        x: Math.floor(getMousePositionCentreGrid().x), 
+        y: Math.floor(getMousePositionCentreGrid().y)
       })
     }
   }
@@ -32,8 +32,8 @@ export default class SquareHighlight extends GameObject {
   update() {
     if (this.show) {
       this.position = {
-        x:Math.floor(getMousePosition().x), 
-        y:Math.floor(getMousePosition().y)
+        x:Math.floor(getMousePositionCentreGrid().x), 
+        y:Math.floor(getMousePositionCentreGrid().y)
       }
     }
   }
