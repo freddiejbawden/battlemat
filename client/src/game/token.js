@@ -9,10 +9,6 @@ export default class Token extends Sprite {
     this.isMouseDown = false;
   }
 
-  start() {
-    eventManager.registerListener('mousedowngrid', (pos) => this.mouseDown(pos))
-    eventManager.registerListener('mouseupgrid', (pos) => this.mouseUp(pos))
-  }
   mouseDown(pos) {
     if (Math.floor(pos.x) === this.position.x && Math.floor(pos.y) === this.position.y) {
       this.isMouseDown = true;

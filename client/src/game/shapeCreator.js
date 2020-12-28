@@ -1,22 +1,48 @@
-import GameObject from '../engine/gameObject'
+import Sprite from '../engine/sprite'
 import eventManager from '../engine/eventManager'
+import {getMousePositionIntersection} from '../engine/input/input'
+import Polygon from '../engine/polygon';
 
-const LINE_STATE = {
-  INACTIVE: 0,
-  WAIT_FOR_FIRST: 1,
-  PLACING_SECOND: 2,
-}
-
-
-class ShapeCreator extends GameObject {
+class ShapeCreator extends Sprite {
 
   constructor() {
-    super();
+    super(null, 25.5,25.5,'token.svg',5,false);
     this.points = []
+    this.active = false;
+    this.currentPolygon = null
   }
 
   start() {
-    eventManager.registerListener('select-point', (pos) => this.segment(pos));
+    eventManager.registerEvent('activate-shape-creator')
+    eventManager.registerListener('activate-shape-creator', () => {
+      super.shouldRender = true
+      this.active = true
+      this.currentPolygon = new Polygon()
+    })
+  }
+  
+
+  checkIfAtStart() {
+    const mousePos = getMousePositionIntersection()
+    
+    const start = this.currentPolygon.points[0]
+    console.log(start)
+    return (start && start[0] === mousePos.x-1 && start[1] === mousePos.y-1)
+  }
+
+  mouseDown() {
+    if (this.active) {
+      if (!this.checkIfAtStart()) {
+        console.log('down')
+        this.currentPolygon.addPoint(getMousePositionIntersection().x-1, getMousePositionIntersection().y-1) 
+      } else {
+        console.log('at start')
+        this.active = false
+        super.shouldRender = false
+        this.currentPolygon = null
+      }
+    }
+    
   }
 
   segment(pos) {
@@ -26,6 +52,13 @@ class ShapeCreator extends GameObject {
     } else {
       this.linestart = pos
     }
+  }
+
+  update() {
+      this.position = {
+        x:Math.floor(getMousePositionIntersection().x) - 0.5, 
+        y:Math.floor(getMousePositionIntersection().y) - 0.5
+      }
   }
 
   

@@ -2,26 +2,27 @@ import GameObject from './gameObject'
 import camera from './rendering/camera'
 import {GRID_SIZE} from './rendering/renderer'
 
-
+// TODO: change polygon to use x,y instead of array
 class Polygon extends GameObject {
-  constructor(id,x,y,points,shouldRender) {
-    super(id,x,y,shouldRender)
+  constructor(id,points,shouldRender) {
+    super(id,0,0,shouldRender)
     this.points = points || []
   } 
- 
+
   render(ctx, canvas) {
-    if (this.points > 1) {
+    if (this.points.length <= 1) {
       return false
     }
     const relativePosition = {
-      x: (this.position.x - camera.data.x),
-      y: (this.position.y - camera.data.y)
+      x: (this.points[0][0] - camera.data.x),
+      y: (this.points[0][1] - camera.data.y)
     };
+
     ctx.beginPath()
     ctx.lineWidth = 5;
     ctx.strokeStyle = "#FF0000";
     ctx.moveTo(relativePosition.x*GRID_SIZE/2 + canvas.width / 2, relativePosition.y*GRID_SIZE/2 + canvas.height / 2)
-    for (let i = 0; i < this.points.length; i++){
+    for (let i = 1; i < this.points.length; i++){
       const relativePosition2 = {
         x: (this.points[i][0] - camera.data.x),
         y: (this.points[i][1] - camera.data.y)

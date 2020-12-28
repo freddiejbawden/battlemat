@@ -16,7 +16,7 @@ export default class ObjectTray extends Component {
             <ObjectBar addEvent={'add-token'} url={'/api/tokens'} />
           </Tab>
           <Tab title="Shapes">
-            <ObjectBar addEvent={'start-draw'} url={'/api/shapes'} />
+            <ObjectBar addEvent={'activate-shape-creator'} url={'/api/shapes'} />
           </Tab>
         </Tabs> 
       </div>

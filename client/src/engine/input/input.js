@@ -42,8 +42,8 @@ const mousePositionToIntersection = (screenX, screenY) => {
   const xLim = camera.data.x - window.innerWidth / GRID_SIZE;
   const yLim = camera.data.y - window.innerHeight / GRID_SIZE;
   return {
-    x: xLim + screenX*2 / GRID_SIZE + 1,
-    y: yLim + screenY*2 / GRID_SIZE + 1
+    x: Math.floor(xLim + screenX*2 / GRID_SIZE) + 1.5,
+    y: Math.floor(yLim + screenY*2 / GRID_SIZE) + 1.5
   }
 }
 

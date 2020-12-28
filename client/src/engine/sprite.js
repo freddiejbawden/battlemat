@@ -2,6 +2,7 @@ import GameObject from './gameObject'
 import camera from './rendering/camera'
 import {GRID_SIZE} from './rendering/renderer'
 import { getAsset } from './assets/asset';
+import eventManager from './eventManager';
 
 class Sprite extends GameObject {
   constructor(id, x,y,sprite,size,shouldRender=true) {
@@ -9,6 +10,8 @@ class Sprite extends GameObject {
     this.size = size;
     this.sprite = sprite;
     this.updatePosition = true;  
+    eventManager.registerListener('mousedowngrid', (pos) => this.mouseDown(pos))
+    eventManager.registerListener('mouseupgrid', (pos) => this.mouseUp(pos))
   }
 
   render(ctx, canvas) {
