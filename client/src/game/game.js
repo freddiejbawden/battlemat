@@ -10,7 +10,6 @@ const load = () => {
   new TokenManager();
   new ShapeCreator();
   new SquareHighlight();
-  new Polygon(null,[[25.5,25.5],[23.5,23.5],[23.5,22.5]])
 }
 
 export default load

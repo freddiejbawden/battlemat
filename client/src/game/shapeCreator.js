@@ -2,6 +2,7 @@ import Sprite from '../engine/sprite'
 import eventManager from '../engine/eventManager'
 import {getMousePositionIntersection} from '../engine/input/input'
 import Polygon from '../engine/polygon';
+import { addEntity } from '../engine/networking/networking';
 
 class ShapeCreator extends Sprite {
 
@@ -39,6 +40,7 @@ class ShapeCreator extends Sprite {
         console.log('at start')
         this.active = false
         super.shouldRender = false
+        addEntity(this.id, {type: 'polygon', ...this.currentPolygon})
         this.currentPolygon = null
       }
     }
