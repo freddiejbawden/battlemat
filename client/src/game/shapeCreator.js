@@ -7,7 +7,7 @@ import { addEntity } from '../engine/networking/networking';
 class ShapeCreator extends Sprite {
 
   constructor() {
-    super(null, 25.5,25.5,'token.svg',5,false);
+    super(null, 25.5,25.5,'pencil.svg',10,false,{x: 0.2, y: -0.2});
     this.points = []
     this.active = false;
     this.currentPolygon = null

@@ -5,11 +5,12 @@ import { getAsset } from './assets/asset';
 import eventManager from './eventManager';
 
 class Sprite extends GameObject {
-  constructor(id, x,y,sprite,size,shouldRender=true) {
+  constructor(id, x,y,sprite,size,shouldRender=true,anchorPosition=null) {
     super(id,x,y,shouldRender);
     this.size = size;
     this.sprite = sprite;
-    this.updatePosition = true;  
+    this.updatePosition = true; 
+    this.anchorPosition = anchorPosition || {x: 0, y: 0} 
     eventManager.registerListener('mousedowngrid', (pos) => this.mouseDown(pos))
     eventManager.registerListener('mouseupgrid', (pos) => this.mouseUp(pos))
   }
@@ -20,8 +21,8 @@ class Sprite extends GameObject {
     }
     
     const relativePosition = {
-      x: (this.position.x - camera.data.x),
-      y: (this.position.y - camera.data.y)
+      x: (this.position.x - camera.data.x) + this.anchorPosition.x,
+      y: (this.position.y - camera.data.y) + this.anchorPosition.y
     };
     // add a check here to see if it needs to be rendered
     ctx.save();
