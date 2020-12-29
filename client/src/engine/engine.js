@@ -13,7 +13,8 @@ class Engine {
     if (!this.gameObjects[id]) {
       this.gameObjects[id] =go;
     } else {
-      console.log(`game object with ${id} already exists`)
+      console.error(`game object with ${id} already exists`)
+      return
     }
     go.start()
   }

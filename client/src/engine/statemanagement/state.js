@@ -1,6 +1,8 @@
 import engine from '../engine'
 import GameObject from '../gameObject';
 import Token from '../../game/token'
+import Polygon from '../polygon'
+import Line from '../line'
 import {emitToServer} from '../networking/networking'
 
 export const createEntityUpdate = (update) => {
@@ -20,7 +22,12 @@ export const updateState = (entities) => {
     if (!gameObject) {
       if (entity.type == 'token') {
         gameObject = new Token(id, entity.position.x, entity.position.y);
+      } else if (entity.type === 'polygon'){
+        gameObject = new Polygon(id, entity.points)
+      } else if (entity.type === 'line') {
+        gameObject = new Line(id, entity.points)
       } else {
+        console.warn(`Unhandled type ${entity.type}`)
         gameObject = new GameObject(id);
       }
     }

@@ -1,15 +1,29 @@
-export interface Entity {
-  name: string,
+export interface Point2D {
+  x: number,
+  y: number
+}
+
+export interface NetworkedObject {
+  name: string
+  sequenceNumber: number
+}
+
+export interface Entity extends NetworkedObject {
   sprite: string,
-  position: {x: number, y: number},
+  position: number[],
   size: number,
   type: string,
-  sequenceNumber: number
+}
+
+export interface Shape extends NetworkedObject {
+  points: Point2D[],
+  type: string,
 }
 
 class Game {
   sockets: {[id: string] : SocketIO.Socket};
-  entities: {[id: string] : Entity};
+  // TODO: change this from any to a union type
+  entities: {[id: string] : any}
   lastUpdateTime: number;
   constructor() {
     this.lastUpdateTime = Date.now();
@@ -19,9 +33,15 @@ class Game {
       sprite: 'token.svg', // convert to static thing
       position: {x: 25, y:25},
       size: 20,
-      sequenceNumber: 1}
+      sequenceNumber: 1
+    },
+    'polygon1': {
+      name: 'Shape 1',
+      type:'polygon',
+      points: [[25.5,25.5],[24.5,25.5],[24.5,24.5],[25.5,24.5]],
     }
   }
+}
 
   addPlayer(socket: SocketIO.Socket) {
     if (!this.sockets) {
@@ -30,7 +50,7 @@ class Game {
     this.sockets[socket.id] = socket;
   }
 
-  addEntity(entityId: string, entity: Entity) {
+  addEntity(entityId: string, entity: any) {
     // tslint:disable-next-line: no-console
     console.log(entityId)
     // tslint:disable-next-line: no-console

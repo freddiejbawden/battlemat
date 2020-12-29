@@ -1,18 +1,17 @@
-import React, { Component } from 'react'
+import React, { useEffect, useState }  from 'react'
 import { Box } from 'grommet'
 import ObjectView from './ObjectView'
-import { useEffect, useState } from 'react'
-export default function ObjectBar() {
 
+export default function ObjectBar(props) {
   const [ objects, setObjects ] = useState([])
 
   useEffect(() => {
-    fetch('/api/tokens')
+    fetch(props.url)
       .then((res) => res.json())
       .then((data => setObjects(data)))
-  }, [])
+  }, [props.url])
   return (
-  <Box background="ui-background" pad="medium">{objects.map((elm) => <ObjectView objectData={elm} />)}</Box>
+  <Box direction="row" background="ui-background" pad="medium">{objects.map((elm, i) => <ObjectView key={i} addEvent={props.addEvents[i]} objectData={elm} />)}</Box>
   )
 }
 

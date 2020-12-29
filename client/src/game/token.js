@@ -1,18 +1,14 @@
 import eventManager from '../engine/eventManager';
-import GameObject from '../engine/gameObject'
-import { getMousePosition } from '../engine/input/input';
+import Sprite from '../engine/sprite'
+import { getMousePositionCentreGrid } from '../engine/input/input';
 import {createEntityUpdate} from '../engine/statemanagement/state'
 
-export default class Token extends GameObject {
+export default class Token extends Sprite {
   constructor(id, x, y, sprite, size) {
     super(id,x,y,sprite,size);
     this.isMouseDown = false;
   }
 
-  start() {
-    eventManager.registerListener('mousedowngrid', (pos) => this.mouseDown(pos))
-    eventManager.registerListener('mouseupgrid', (pos) => this.mouseUp(pos))
-  }
   mouseDown(pos) {
     if (Math.floor(pos.x) === this.position.x && Math.floor(pos.y) === this.position.y) {
       this.isMouseDown = true;
@@ -20,7 +16,7 @@ export default class Token extends GameObject {
   } 
   
   mouseUp() {
-    this.isMouseDown && createEntityUpdate({ id: this.id, position: {x: Math.floor(getMousePosition().x), y: Math.floor(getMousePosition().y) }})
+    this.isMouseDown && createEntityUpdate({ id: this.id, position: {x: Math.floor(getMousePositionCentreGrid().x), y: Math.floor(getMousePositionCentreGrid().y) }})
     super.updatePosition = true;
     this.isMouseDown = false;
   }
@@ -28,8 +24,8 @@ export default class Token extends GameObject {
   update() {
     if (this.isMouseDown) {
       const newPosition = {
-        x: getMousePosition().x - 0.5,
-        y: getMousePosition().y - 0.5
+        x: getMousePositionCentreGrid().x - 0.5,
+        y: getMousePositionCentreGrid().y - 0.5
       }
       createEntityUpdate({id: this.id, position: {x: newPosition.x, y: newPosition.y}})
     }

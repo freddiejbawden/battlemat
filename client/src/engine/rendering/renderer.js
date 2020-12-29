@@ -76,7 +76,6 @@ const renderEntity = (entity,ctx, canvas) => {
 }
 
 export const render = () => {
-
   const canvas = document.getElementById('grid-canvas');
   if (!canvas) return
   canvas.width = window.innerWidth;
@@ -87,8 +86,7 @@ export const render = () => {
   Object.keys(engine.getGameObjects()).forEach(id => {
     const go = engine.getGameObject(id);
     if (go.shouldRender) {
-      renderEntity(go,ctx,canvas);  
+      go.render(ctx,canvas);  
     }
   });
-  
 }

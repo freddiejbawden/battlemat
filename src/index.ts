@@ -29,6 +29,11 @@ app.get('/api/tokens', (req,res) => {
   res.json(list);
 });
 
+app.get('/api/shapes', (req,res) => {
+  const list = ["assets/polygon.svg","assets/drawline.svg"];
+  res.json(list);
+});
+
 app.get('/', (req, res) => {
   // tslint:disable-next-line:no-console
   console.log(req.sessionID);

@@ -13,10 +13,10 @@ export default class ObjectTray extends Component {
           alignSelf="start"
         >
           <Tab title="Tokens">
-            <ObjectBar />
+            <ObjectBar addEvents={['add-token']} url={'/api/tokens'} />
           </Tab>
-          <Tab title="Scenery">
-            <ObjectBar />
+          <Tab title="Shapes">
+            <ObjectBar addEvents={['activate-shape-creator', 'activate-line-creator']} url={'/api/shapes'} />
           </Tab>
         </Tabs> 
       </div>
