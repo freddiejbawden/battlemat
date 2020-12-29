@@ -14,9 +14,16 @@ class LineCreator extends Sprite {
   }
 
   start() {
+    eventManager.registerEvent('cancel-action', {})
+    eventManager.registerListener('cancel-action', () => {
+      if (this.active) {
+        this.active = false
+        super.shouldRender = false
+        this.currentLine.destroy()
+      }
+    })
     eventManager.registerEvent('activate-line-creator')
     eventManager.registerListener('activate-line-creator', () => {
-      console.log('listener')
       super.shouldRender = true
       this.active = true
       this.currentLine = new Line()
@@ -32,26 +39,14 @@ class LineCreator extends Sprite {
   mouseDown() {
     if (this.active) {
       if (!this.checkLastAgain()) {
-        console.log('down')
         this.currentLine.addPoint(getMousePositionIntersection().x-1, getMousePositionIntersection().y-1) 
-        console.log(this.currentLine.points)
       } else {
         this.active = false
         super.shouldRender = false
         addEntity(this.id, {type: 'line', ...this.currentLine})
         this.currentLine = null
       }
-    }
-    
-  }
-
-  segment(pos) {
-    console.log(`select-point ${pos.x} ${pos.y}`)
-    if (this.linestart) {
-      this.lineend = pos
-    } else {
-      this.linestart = pos
-    }
+    } 
   }
 
   update() {

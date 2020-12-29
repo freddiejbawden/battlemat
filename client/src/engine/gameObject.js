@@ -10,7 +10,7 @@ export default class GameObject {
     engine.registerGameObject(this.id, this);
   }
   destroy() {
-    engine.removeGameObject(this);
+    engine.removeGameObject(this.id);
   }
   update() {
 

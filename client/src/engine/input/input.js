@@ -15,7 +15,11 @@ const keyupHandler = (e) => {
 }
 
 const mouseDownHandler = (e) => {
-  eventManager.triggerEvent('mousedowngrid', mousePositionToCentreGrid(e.clientX, e.clientY));
+  const element = document.elementFromPoint(e.clientX, e.clientY)
+  console.log(element)
+  if (element && element.id === "grid-canvas") {
+    eventManager.triggerEvent('mousedowngrid', mousePositionToCentreGrid(e.clientX, e.clientY));
+  }
 }
 
 
