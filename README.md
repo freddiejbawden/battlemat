@@ -4,7 +4,7 @@ A small, very much work in progress, tabletop RPG (TTRPG) battlemat which aims t
 
 Battlemats are used in TTRPGs during combat to visualise the position of the players and enemies, others solutions such as Roll20 aim to provide an all-in-one solution with many features creating a learning curve. The learning barrier often leaves players feeling overwhelmed, taking away from the enjoyment of the game. This project provides a simple alternative which reduces this barrier to play. 
 
-The application uses a custom rendering engine based on a high level off of Unity. The rendering engine interfaces with React to provide the UI. Each client connects to a socket.io and express server written with Typescript to manage the battlemat's state and keep all clients in-sync.
+The application uses a custom game engine based on a high level off of Unity. The rendering engine interfaces with React to provide the UI. Each client connects to a socket.io and express server written with Typescript to manage the battlemat's state and keep all clients in-sync.
 
 ## Running 
 
