@@ -38,7 +38,7 @@ class LineCreator extends Sprite {
       } else {
         this.active = false
         super.shouldRender = false
-        // addEntity(this.id, {type: 'line', ...this.currentLine})
+        addEntity(this.id, {type: 'line', ...this.currentLine})
         this.currentLine = null
       }
     }
