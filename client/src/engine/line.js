@@ -3,7 +3,7 @@ import camera from './rendering/camera'
 import {GRID_SIZE} from './rendering/renderer'
 
 // TODO: change polygon to use x,y instead of array
-class Polygon extends GameObject {
+class Line extends GameObject {
   constructor(id,points,shouldRender) {
     super(id,0,0,shouldRender)
     this.points = points || []
@@ -20,7 +20,7 @@ class Polygon extends GameObject {
 
     ctx.beginPath()
     ctx.lineWidth = 5;
-    ctx.strokeStyle = "#FF0000";
+    ctx.strokeStyle = "#00FF00";
     ctx.moveTo(relativePosition.x*GRID_SIZE/2 + canvas.width / 2, relativePosition.y*GRID_SIZE/2 + canvas.height / 2)
     for (let i = 1; i < this.points.length; i++){
       const relativePosition2 = {
@@ -29,7 +29,6 @@ class Polygon extends GameObject {
       };
       ctx.lineTo(relativePosition2.x*GRID_SIZE/2 + canvas.width / 2, relativePosition2.y*GRID_SIZE/2 + canvas.height / 2)
     }
-    ctx.closePath();
     ctx.stroke();
   }
 
@@ -43,4 +42,4 @@ class Polygon extends GameObject {
 
 }
 
-export default Polygon
+export default Line

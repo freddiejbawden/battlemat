@@ -30,7 +30,7 @@ app.get('/api/tokens', (req,res) => {
 });
 
 app.get('/api/shapes', (req,res) => {
-  const list = ["assets/drawline.svg"];
+  const list = ["assets/polygon.svg","assets/drawline.svg"];
   res.json(list);
 });
 

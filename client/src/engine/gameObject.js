@@ -25,6 +25,6 @@ export default class GameObject {
     return false;
   }
   render() {
-    console.warn('Base GameObject does not have a render method!')
+    // console.warn('Base GameObject does not have a render method!')
   }
 }

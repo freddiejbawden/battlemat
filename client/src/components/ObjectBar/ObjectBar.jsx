@@ -11,7 +11,7 @@ export default function ObjectBar(props) {
       .then((data => setObjects(data)))
   }, [props.url])
   return (
-  <Box background="ui-background" pad="medium">{objects.map((elm) => <ObjectView addEvent={props.addEvent} objectData={elm} />)}</Box>
+  <Box direction="row" background="ui-background" pad="medium">{objects.map((elm, i) => <ObjectView addEvent={props.addEvents[i]} objectData={elm} />)}</Box>
   )
 }
 
