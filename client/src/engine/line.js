@@ -5,7 +5,7 @@ import {GRID_SIZE} from './rendering/renderer'
 // TODO: change polygon to use x,y instead of array
 class Line extends GameObject {
   constructor(id,points,shouldRender) {
-    super(id,0,0,shouldRender)
+    super(id,0,0,null,{shouldRender: shouldRender})
     this.points = points || []
   } 
 

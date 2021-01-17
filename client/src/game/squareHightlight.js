@@ -4,7 +4,7 @@ import { getMousePositionCentreGrid } from '../engine/input/input';
 
 export default class SquareHighlight extends Sprite {
   constructor() {
-    super('gridHighlight',25,25,'gridHighlight.svg',25,false);
+    super('gridHighlight',25,25,'gridHighlight.svg',25,null,{shouldRender: false});
     this.isMouseDown = false;
     this.show = false
     this.triggerShow = this.triggerShow.bind(this)
