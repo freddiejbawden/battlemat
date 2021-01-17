@@ -85,7 +85,7 @@ export const render = () => {
   renderGrid(ctx,canvas);
   Object.keys(engine.getGameObjects()).forEach(id => {
     const go = engine.getGameObject(id);
-    if (go.shouldRender) {
+    if (go.shouldRender && go.parent === null) {
       go.render(ctx,canvas);  
     }
   });

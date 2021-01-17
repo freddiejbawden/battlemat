@@ -2,21 +2,38 @@ import eventManager from '../engine/eventManager';
 import Sprite from '../engine/sprite'
 import { getMousePositionCentreGrid } from '../engine/input/input';
 import {createEntityUpdate} from '../engine/statemanagement/state'
+import Text from '../engine/text'
+import { uuidv4 } from '../utils';
 
 export default class Token extends Sprite {
-  constructor(id, x, y, sprite, size) {
-    super(id,x,y,sprite,size);
+  constructor(id, x, y, size, t=true, options={parent: null, text: 'T1'}) {
+    super(id,x,y,'token.svg',size,options.parent);
     this.isMouseDown = false;
+    super.addChild(new Text(`${id}-text`,0,0,options.text,id))
+    if (t) {
+      console.log('add child')
+      super.addChild(new Token(uuidv4(), 1,1,20,false,{parent: id, text: 'T2'}))
+    }
+  }
+
+  start() {
+    console.log(`${this.id} start`)
   }
 
   mouseDown(pos) {
-    if (Math.floor(pos.x) === this.position.x && Math.floor(pos.y) === this.position.y) {
+    const absolutePosition = this.getAbsolutePosition()
+    if (Math.floor(pos.x) === absolutePosition.x && Math.floor(pos.y) === absolutePosition.y) {
       this.isMouseDown = true;
     }
   } 
   
   mouseUp() {
-    this.isMouseDown && createEntityUpdate({ id: this.id, position: {x: Math.floor(getMousePositionCentreGrid().x), y: Math.floor(getMousePositionCentreGrid().y) }})
+    const newPosition = {
+      x: getMousePositionCentreGrid().x,
+      y: getMousePositionCentreGrid().y
+    }
+    const relativePosition = super.translatePointToRelative(newPosition);
+    this.isMouseDown && createEntityUpdate({ id: this.id, position: {x: Math.floor(relativePosition.x), y: Math.floor(relativePosition.y) }})
     super.updatePosition = true;
     this.isMouseDown = false;
   }
@@ -27,7 +44,8 @@ export default class Token extends Sprite {
         x: getMousePositionCentreGrid().x - 0.5,
         y: getMousePositionCentreGrid().y - 0.5
       }
-      createEntityUpdate({id: this.id, position: {x: newPosition.x, y: newPosition.y}})
+      const relativePosition = super.translatePointToRelative(newPosition);
+      createEntityUpdate({id: this.id, position: {x: relativePosition.x, y: relativePosition.y}})
     }
   }
 }
