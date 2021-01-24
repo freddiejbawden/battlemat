@@ -1,11 +1,13 @@
 import React, {useState} from 'react'
 import {Box, Text,FormField, TextInput, Button} from 'grommet'
 import { engine } from '../../../engine/engine'
+import { createEntityUpdate } from '../../../engine/statemanagement/state'
 export default function TokenDetails(props) {
   const [value, setValue] = useState(props.tokenLabel)
 
   const save = () => {
     console.log('save')
+    createEntityUpdate({id: props.gameObjectId, options: {text: value}})
   }
   
   return (
@@ -22,3 +24,5 @@ export default function TokenDetails(props) {
     </Box>
   )
 }
+
+// TODO: PropTypes here 

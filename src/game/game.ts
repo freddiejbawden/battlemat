@@ -30,6 +30,9 @@ class Game {
     this.entities = {'tokenAD': {
       name: 'Token 1',
       type: 'token',
+      options: {
+        text: 'T2'
+      },
       sprite: 'token.svg', // convert to static thing
       position: {x: 25, y:25},
       size: 20,

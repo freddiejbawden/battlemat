@@ -12,7 +12,7 @@ export const createEntityUpdate = (update) => {
   }
   const {id,position,size} = update
   updateState([update]);
-  emitToServer('update-entity', {id,position,size})
+  emitToServer('update-entity', update)
 }
 
 export const updateState = (entities) => {
@@ -21,7 +21,7 @@ export const updateState = (entities) => {
     let gameObject = engine.getGameObject(id)
     if (!gameObject) {
       if (entity.type == 'token') {
-        gameObject = new Token(id, entity.position.x, entity.position.y);
+        gameObject = new Token(id, entity.position.x, entity.position.y, 25, entity.options);
       } else if (entity.type === 'polygon'){
         gameObject = new Polygon(id, entity.points)
       } else if (entity.type === 'line') {
@@ -34,11 +34,11 @@ export const updateState = (entities) => {
     if (gameObject.updatePosition) {
       gameObject.position = entity.position
     }
-    if (entity.size && gameObject.size !== entity.size) {
-      gameObject.size = entity.size
-    }
-    if (entity.sprite && gameObject.sprite !== entity.sprite) {
-      gameObject.sprite = entity.sprite
-    }
+  
+    Object.keys(entity).forEach(property => {
+      if (entity[property] && gameObject[property] !== entity[property]) {
+        gameObject[property] = entity[property]
+      }
+    })
   })
 };
