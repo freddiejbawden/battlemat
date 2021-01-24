@@ -10,7 +10,7 @@ export interface NetworkedObject {
 
 export interface Entity extends NetworkedObject {
   sprite: string,
-  position: number[],
+  position: Point2D
   size: number,
   type: string,
 }
@@ -38,7 +38,7 @@ class Game {
     'polygon1': {
       name: 'Shape 1',
       type:'polygon',
-      points: [[25.5,25.5],[24.5,25.5],[24.5,24.5],[25.5,24.5]],
+      points: [{x: 25.5, y: 25.5},{x: 24.5, y: 25.5},{x: 24.5, y: 24.5},{x: 25.5,y: 24.5}],
     }
   }
 }
@@ -58,10 +58,12 @@ class Game {
     this.entities[entityId] = entity;
   }
 
-  updateEntity(sequenceNumber: number, entityID: string, newX: number, newY:number) {
+  updateEntity(sequenceNumber: number, entityID: string, updatedGameObject: any) {
     if (this.entities[entityID]) {
       this.entities[entityID].sequenceNumber = sequenceNumber
-      this.entities[entityID].position = {x: newX, y: newY}
+      Object.keys(updatedGameObject).forEach(property => {
+        this.entities[entityID][property] = updatedGameObject[property]
+      })
     }
   }
 

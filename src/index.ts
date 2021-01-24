@@ -60,7 +60,7 @@ sio.sockets.on('connection', (socket) => {
   console.log(`A socket connected with id ${hs}`);
   socket.on('update-entity', (data: EntityUpdate) => {
     // tslint:disable-next-line:no-console
-    g.updateEntity(data.sequenceNumber, data.id, data.position.x, data.position.y);
+    g.updateEntity(data.sequenceNumber, data.id, {position: {x: data.position.x, y: data.position.y}});
   })
   socket.on('add-entity', (entityId: string, entity: Entity) => {
     // tslint:disable-next-line:no-console

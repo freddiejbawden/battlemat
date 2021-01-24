@@ -33,7 +33,7 @@ class LineCreator extends Sprite {
   checkLastAgain() {
     const mousePos = getMousePositionIntersection()
     const end = this.currentLine.points[this.currentLine.points.length - 1]
-    return (end && end[0] === mousePos.x-1 && end[1] === mousePos.y-1)
+    return (end && end.x === mousePos.x-1 && end.y === mousePos.y-1)
   }
 
   mouseDown() {

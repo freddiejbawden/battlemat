@@ -6,14 +6,11 @@ import Text from '../engine/text'
 import { uuidv4 } from '../utils';
 
 export default class Token extends Sprite {
-  constructor(id, x, y, size, t=true, options={parent: null, text: 'T1'}) {
+  constructor(id, x, y, size, options={parent: null, text: 'T1'}) {
     super(id,x,y,'token.svg',size,options.parent);
     this.isMouseDown = false;
     super.addChild(new Text(`${id}-text`,0,0,options.text,id))
-    if (t) {
-      console.log('add child')
-      super.addChild(new Token(uuidv4(), 1,1,20,false,{parent: id, text: 'T2'}))
-    }
+    
   }
 
   start() {
