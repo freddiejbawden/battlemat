@@ -14,12 +14,39 @@ const keyupHandler = (e) => {
   delete down[e.which];
 }
 
-const mouseDownHandler = (e) => {
-  const element = document.elementFromPoint(e.clientX, e.clientY)
-  console.log(element)
-  if (element && element.id === "grid-canvas") {
-    eventManager.triggerEvent('mousedowngrid', mousePositionToCentreGrid(e.clientX, e.clientY));
+function getAllElementsFromPoint(x, y) {
+  var elements = [];
+  var display = [];
+  var item = document.elementFromPoint(x, y);
+  while (item && item !== document.body && item !== window && item !== document && item !== document.documentElement) {
+      elements.push(item);
+      display.push(item.style.display);
+      item.style.display = "none";
+      item = document.elementFromPoint(x, y);
   }
+  // restore display property
+  for (var i = 0; i < elements.length; i++) {
+      elements[i].style.display = display[i];
+  }
+  return elements;
+}
+
+
+const mouseDownHandler = (e) => {
+  let trigger = null
+  // Drilldown through elements as there might be empty space which is covered by the div container
+  const elements = getAllElementsFromPoint(e.clientX, e.clientY)
+  while(trigger === null && elements.length > 0) {
+    // pop off first element
+    const element = elements.shift();
+    if (!element.getAttribute('data-ignore-click') && element.id !== "grid-canvas") {
+      trigger =false;
+    }
+    if (!element.getAttribute('data-ignore-click') && element.id === "grid-canvas") {
+      trigger = true
+    }
+  }
+  if (trigger) eventManager.triggerEvent('mousedowngrid', mousePositionToCentreGrid(e.clientX, e.clientY)); 
 }
 
 

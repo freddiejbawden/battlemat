@@ -6,11 +6,13 @@ import './objecttray.css'
 export default class ObjectTray extends Component {
   render() {
     return (
-      <div>
+      <Box width="100vw" >
         <Tabs 
+          width="100%"
           className="object-tray-container"
           alignControls="start"
           alignSelf="start"
+          background=""
         >
           <Tab title="Tokens">
             <ObjectBar addEvents={['add-token']} url={'/api/tokens'} />
@@ -19,7 +21,7 @@ export default class ObjectTray extends Component {
             <ObjectBar addEvents={['activate-shape-creator', 'activate-line-creator']} url={'/api/shapes'} />
           </Tab>
         </Tabs> 
-      </div>
+      </Box>
     )
   }
 }
