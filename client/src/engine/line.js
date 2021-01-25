@@ -14,8 +14,8 @@ class Line extends GameObject {
       return false
     }
     const relativePosition = {
-      x: (this.points[0][0] - camera.data.x),
-      y: (this.points[0][1] - camera.data.y)
+      x: (this.points[0].x - camera.data.x),
+      y: (this.points[0].y - camera.data.y)
     };
 
     ctx.beginPath()
@@ -24,8 +24,8 @@ class Line extends GameObject {
     ctx.moveTo(relativePosition.x*GRID_SIZE/2 + canvas.width / 2, relativePosition.y*GRID_SIZE/2 + canvas.height / 2)
     for (let i = 1; i < this.points.length; i++){
       const relativePosition2 = {
-        x: (this.points[i][0] - camera.data.x),
-        y: (this.points[i][1] - camera.data.y)
+        x: (this.points[i].x - camera.data.x),
+        y: (this.points[i].y - camera.data.y)
       };
       ctx.lineTo(relativePosition2.x*GRID_SIZE/2 + canvas.width / 2, relativePosition2.y*GRID_SIZE/2 + canvas.height / 2)
     }
@@ -33,7 +33,7 @@ class Line extends GameObject {
   }
 
   addPoint(x,y) {
-    this.points.push([x,y])
+    this.points.push({x,y})
   }
 
   removePoint(x,y) {

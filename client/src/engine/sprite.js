@@ -14,7 +14,7 @@ class Sprite extends GameObject {
     eventManager.registerListener('mousedowngrid', (pos) => this.mouseDown(pos))
     eventManager.registerListener('mouseupgrid', (pos) => this.mouseUp(pos))
   }
-
+  
   render(ctx, canvas) {
     if (!this.sprite) {
       return;

@@ -20,6 +20,11 @@ export default class GameObject {
     }
   }
 
+  getChild(id) {  
+    const matchIds =  this.children.filter(child => child.id == id)
+    return (matchIds.length > 0) ? matchIds[0] : null;
+  }
+
   renderChildren(ctx,canvas) {
     this.children.forEach(child => child.render(ctx,canvas))
   }

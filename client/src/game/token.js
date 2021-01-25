@@ -4,16 +4,17 @@ import { getMousePositionCentreGrid } from '../engine/input/input';
 import {createEntityUpdate} from '../engine/statemanagement/state'
 import Text from '../engine/text'
 import { uuidv4 } from '../utils';
+import { runInThisContext } from 'vm';
+import { ThemeConsumer } from 'styled-components';
 
 export default class Token extends Sprite {
-  constructor(id, x, y, size, t=true, options={parent: null, text: 'T1'}) {
-    super(id,x,y,'token.svg',size,options.parent);
+  constructor(id, x, y, size, options={parent: null, text: 'T1'}) {
+    super(id,x,y,'token.svg',size,options.parent || null);
     this.isMouseDown = false;
-    super.addChild(new Text(`${id}-text`,0,0,options.text,id))
-    if (t) {
-      console.log('add child')
-      super.addChild(new Token(uuidv4(), 1,1,20,false,{parent: id, text: 'T2'}))
-    }
+    this.options = options;
+    this.mouseDownTime = 0
+    this.textId = `${id}-text`
+    super.addChild(new Text(`${id}-text`,0,0,options.text || null,id))
   }
 
   start() {
@@ -24,6 +25,7 @@ export default class Token extends Sprite {
     const absolutePosition = this.getAbsolutePosition()
     if (Math.floor(pos.x) === absolutePosition.x && Math.floor(pos.y) === absolutePosition.y) {
       this.isMouseDown = true;
+      this.mouseDownTime = Date.now()
     }
   } 
   
@@ -36,10 +38,17 @@ export default class Token extends Sprite {
     this.isMouseDown && createEntityUpdate({ id: this.id, position: {x: Math.floor(relativePosition.x), y: Math.floor(relativePosition.y) }})
     super.updatePosition = true;
     this.isMouseDown = false;
+    if (Date.now() - this.mouseDownTime <= 200) {
+      eventManager.triggerEvent('show-details', this.id)
+    }
   }
 
   update() {
-    if (this.isMouseDown) {
+    const t = this.getChild(this.textId)
+    if (t) {
+      t.text = this.options.text
+    }
+    if (this.isMouseDown && Date.now() - this.mouseDownTime > 200) {
       const newPosition = {
         x: getMousePositionCentreGrid().x - 0.5,
         y: getMousePositionCentreGrid().y - 0.5

@@ -35,7 +35,7 @@ class ShapeCreator extends Sprite {
   checkIfAtStart() {
     const mousePos = getMousePositionIntersection()
     const start = this.currentPolygon.points[0]
-    return (start && start[0] === mousePos.x-1 && start[1] === mousePos.y-1)
+    return (start && start.x === mousePos.x-1 && start.y === mousePos.y-1)
   }
 
   mouseDown() {
