@@ -1,9 +1,14 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {Box, Text,FormField, TextInput, Button} from 'grommet'
 import { engine } from '../../../engine/engine'
 import { createEntityUpdate } from '../../../engine/statemanagement/state'
 export default function TokenDetails(props) {
-  const [value, setValue] = useState(props.tokenLabel)
+  const {gameObjectId,tokenLabel} = props;
+  const [value, setValue] = useState(tokenLabel)
+
+  useEffect(() => {
+    setValue(tokenLabel)
+  }, [gameObjectId])
 
   const save = () => {
     console.log('save')
