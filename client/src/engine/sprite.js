@@ -11,8 +11,11 @@ class Sprite extends GameObject {
     this.sprite = sprite;
     this.updatePosition = true; 
     this.anchorPosition = options.anchorPosition || {x: 0, y: 0} 
-    eventManager.registerListener('mousedowngrid', (pos) => this.mouseDown(pos))
     eventManager.registerListener('mouseupgrid', (pos) => this.mouseUp(pos))
+  }
+  
+  checkCollision(position) {
+    return false
   }
   
   render(ctx, canvas) {

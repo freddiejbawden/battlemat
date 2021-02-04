@@ -6,6 +6,7 @@ import { connectToServer } from '../engine/networking/networking'
 class Engine {
   constructor() {
     this.gameObjects = {};
+    this.gameObjectsAtPosition = {};
     startCapturingInput();
   }
 
@@ -43,12 +44,14 @@ class Engine {
     }, 1000/30);
   }
   update() {
-   Object.keys(this.gameObjects).forEach(id => {
-     this.getGameObject(id).update();
-   })
+    this.gameObjectsAtPosition = {}
+    Object.keys(this.gameObjects).forEach(id => {
+      this.getGameObject(id).update();
+      const nextPos = this.getGameObject(id).position
+      this.gameObjectsAtPosition[`${nextPos.x},${nextPos.y}`] = id
+    })
   }
 }
 
 const instance = new Engine();
-Object.freeze(instance);
 export default instance;
