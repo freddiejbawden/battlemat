@@ -65,7 +65,6 @@ sio.sockets.on('connection', (socket) => {
     const entityId = data.id
     delete data.id
     // tslint:disable-next-line:no-console
-    console.log(data)
     g.updateEntity(data.sequenceNumber, entityId, data);
   })
   socket.on('add-entity', (entityId: string, entity: Entity) => {

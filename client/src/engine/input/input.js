@@ -1,7 +1,7 @@
 import camera from '../rendering/camera'
 import { GRID_SIZE } from '../rendering/renderer';
 import eventManager from '../eventManager';
-
+import engine from '../engine'
 const down = {};
 let currentMousePositionCentreGrid = {x:0,y:0}
 let currentMousePositionIntersection = {x:0,y:0}
@@ -39,14 +39,28 @@ const mouseDownHandler = (e) => {
   while(trigger === null && elements.length > 0) {
     // pop off first element
     const element = elements.shift();
+    console.log(element)
     if (!element.getAttribute('data-ignore-click') && element.id !== "grid-canvas") {
-      trigger =false;
+      trigger = false;
     }
     if (!element.getAttribute('data-ignore-click') && element.id === "grid-canvas") {
       trigger = true
     }
   }
-  if (trigger) eventManager.triggerEvent('mousedowngrid', mousePositionToCentreGrid(e.clientX, e.clientY)); 
+  if (!trigger) {
+    return;
+  }
+  let collided = false
+  const gridpos = mousePositionToCentreGrid(e.clientX, e.clientY)
+  Object.keys(engine.getGameObjects()).forEach((id) => {
+    if (engine.getGameObject(id).checkCollision(gridpos)) {
+      collided = true
+      engine.getGameObject(id).mouseDown(gridpos)
+    }
+  })
+  if (!collided){ 
+    eventManager.triggerEvent('mousedowngrid', mousePositionToCentreGrid(e.clientX, e.clientY)); 
+  }
 }
 
 
@@ -57,6 +71,8 @@ const mouseUpHandler = (e) => {
 const mouseMoveHandler = (e) => {
   currentMousePositionCentreGrid = mousePositionToCentreGrid(e.clientX,e.clientY)
   currentMousePositionIntersection = mousePositionToIntersection(e.clientX,e.clientY)
+  eventManager.triggerEvent('mousemovegrid', mousePositionToCentreGrid(e.clientX, e.clientY));
+
 }
 
 export const isKeyDown = (key) => {
@@ -93,8 +109,13 @@ export const startCapturingInput = () => {
   window.addEventListener('keyup', keyupHandler);
   window.addEventListener('mousedown', mouseDownHandler);
   window.addEventListener('mouseup', mouseUpHandler);
+  window.addEventListener('mousemove', (e) => eventManager.triggerEvent('mousemoveraw', e))
   window.addEventListener('mousemove', mouseMoveHandler)
+
   eventManager.registerEvent('mousedowngrid');
+  eventManager.registerEvent('mousemovegrid');
   eventManager.registerEvent('mouseupgrid');
+  eventManager.registerEvent('mousemoveraw');
+
 
 }
