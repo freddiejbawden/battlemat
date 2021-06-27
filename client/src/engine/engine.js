@@ -48,7 +48,9 @@ class Engine {
     Object.keys(this.gameObjects).forEach(id => {
       this.getGameObject(id).update();
       const nextPos = this.getGameObject(id).position
-      this.gameObjectsAtPosition[`${nextPos.x},${nextPos.y}`] = id
+      if (nextPos) {
+        this.gameObjectsAtPosition[`${nextPos.x},${nextPos.y}`] = id
+      }
     })
   }
 }

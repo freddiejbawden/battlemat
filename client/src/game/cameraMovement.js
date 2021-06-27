@@ -4,14 +4,18 @@ import { isKeyDown } from '../engine/input/input';
 import eventManager from '../engine/eventManager';
 import { GRID_SIZE } from '../engine/rendering/renderer';
 
+const TIME_UNTIL_MOVE = 500;
+
 export default class CameraMovement extends GameObject {
   constructor() {
     super();
+    
     this.speed = 0.1;
     this.movement = {x:0, y:0}
     this.lastMousePosition = {x:0, y:0}
     this.currentMousePosition = {x:0, y:0}
     this.isMouseDown = false
+    this.mouseDownTimeout = null
     eventManager.registerListener('mousemoveraw', (e) => {
       this.movement = {
         x: -e.movementX*4 / GRID_SIZE,
@@ -20,8 +24,13 @@ export default class CameraMovement extends GameObject {
     })
     eventManager.registerListener('mousedowngrid', () => {
       this.isMouseDown = true
+      clearTimeout(this.mouseDownTimeout)
+      this.mouseDownTimeout = setTimeout(() => {
+        this.isMouseDown = true
+      }, TIME_UNTIL_MOVE)
     })
     eventManager.registerListener('mouseupgrid', () => {
+      clearTimeout(this.mouseDownTimeout)
       this.isMouseDown = false
     })
   }

@@ -39,12 +39,16 @@ const mouseDownHandler = (e) => {
   while(trigger === null && elements.length > 0) {
     // pop off first element
     const element = elements.shift();
+    console.log(element)
     if (!element.getAttribute('data-ignore-click') && element.id !== "grid-canvas") {
-      trigger =false;
+      trigger = false;
     }
     if (!element.getAttribute('data-ignore-click') && element.id === "grid-canvas") {
       trigger = true
     }
+  }
+  if (!trigger) {
+    return;
   }
   let collided = false
   const gridpos = mousePositionToCentreGrid(e.clientX, e.clientY)
