@@ -37,7 +37,6 @@ app.get('/api/shapes', (req,res) => {
 });
 
 app.get('/', (req, res) => {
-  console.log(__dirname)
   // tslint:disable-next-line:no-console
   console.log(req.sessionID);
   res.sendFile(path.join(__dirname+'/client/index.html'));
