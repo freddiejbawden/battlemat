@@ -21,6 +21,11 @@ export default class Token extends Sprite {
     console.log(`${this.id} start`)
   }
 
+  checkCollision(pos) {
+    const absolutePosition = this.getAbsolutePosition()
+    return (Math.floor(pos.x) === absolutePosition.x && Math.floor(pos.y) === absolutePosition.y) 
+  }
+
   mouseDown(pos) {
     const absolutePosition = this.getAbsolutePosition()
     if (Math.floor(pos.x) === absolutePosition.x && Math.floor(pos.y) === absolutePosition.y) {

@@ -73,6 +73,10 @@ export default class GameObject {
     return absolutePosition
   }
 
+  checkCollision(position) {
+    return false
+  }
+
   destroy() {
     engine.removeGameObject(this.id);
   }

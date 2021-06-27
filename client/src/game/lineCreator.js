@@ -7,7 +7,7 @@ import { addEntity } from '../engine/networking/networking';
 class LineCreator extends Sprite {
 
   constructor() {
-    super(null, 25.5,25.5,'pencil.svg',10,null,{shouldRender: false, anchorPosition: {x: 0.2, y: -0.2}});
+    super(null, 25.5,25.5,'pencil.svg',10,null,{shouldRender: false, anchorPosition: {x: 0.2, y: -0.2}, mouseGlobal: true});
     this.points = []
     this.active = false;
     this.currentLine = null
@@ -24,6 +24,7 @@ class LineCreator extends Sprite {
     })
     eventManager.registerEvent('activate-line-creator')
     eventManager.registerListener('activate-line-creator', () => {
+      console.log('start')
       super.shouldRender = true
       this.active = true
       this.currentLine = new Line()

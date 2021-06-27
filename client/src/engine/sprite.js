@@ -5,14 +5,20 @@ import { getAsset } from './assets/asset';
 import eventManager from './eventManager';
 
 class Sprite extends GameObject {
-  constructor(id, x,y,sprite,size,parent,options={shouldRender: true,anchorPosition: null}) {
+  constructor(id, x,y,sprite,size,parent,options={shouldRender: true,anchorPosition: null, mouseGlobal: false}) {
     super(id,x,y,parent,{ shouldRender: options.shouldRender });
     this.size = size;
     this.sprite = sprite;
     this.updatePosition = true; 
     this.anchorPosition = options.anchorPosition || {x: 0, y: 0} 
-    eventManager.registerListener('mousedowngrid', (pos) => this.mouseDown(pos))
+    if (options.mouseGlobal) {
+      eventManager.registerListener('mousedowngrid', (pos) => this.mouseDown())
+    }
     eventManager.registerListener('mouseupgrid', (pos) => this.mouseUp(pos))
+  }
+  
+  checkCollision(position) {
+    return false
   }
   
   render(ctx, canvas) {
