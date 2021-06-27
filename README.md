@@ -1,8 +1,6 @@
 # battlemat
 
-A small, very much work in progress, tabletop RPG (TTRPG) battlemat which aims to provide a streamlined experience for players who don't need the bulky features of other systems. 
-
-Battlemats are used in TTRPGs during combat to visualise the position of the players and enemies, others solutions such as Roll20 aim to provide an all-in-one solution with many features creating a learning curve. The learning barrier often leaves players feeling overwhelmed, taking away from the enjoyment of the game. This project provides a simple alternative which reduces this barrier to play. 
+A small tabletop RPG (TTRPG) battlemat
 
 The application uses a custom game engine based on a high level off of Unity. The rendering engine interfaces with React to provide the UI. Each client connects to a socket.io and express server written with Typescript to manage the battlemat's state and keep all clients in-sync.
 
@@ -15,8 +13,8 @@ On first time running: `npm i`
 ## Project Goals
 
 - [x] Create a rendering engine to handle grid based play
-- [ ] Users can use simple tokens with uploaded images to represent enemies and players
 - [x] Users can draw on the mat to create terrain (old school dungeon map style) 
-- [ ] Users can save and load battlemats
-- [ ] Allow for users to create rooms to silo battlemat into
+- [x] Create a robust system for showing real-time updates to the battlemap
+- [x] Allow renaming of tokens on map 
 
+(I changed the scope of this project in an effor to get it done :) )
