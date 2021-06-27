@@ -6,8 +6,10 @@ import io from 'socket.io';
 
 import Game, { Entity } from './game/game'
 
+
 const app = express();
 const port = process.env.PORT || 8080;
+const publicPath = path.join(__dirname)
 const verbose = false;
 const sessionMiddleware = session({
   secret: 'secret',
@@ -22,7 +24,7 @@ if (app.get('env') === 'development') {
 }
 
 app.use(express.static(path.join(__dirname, 'client/build')));
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, '..', 'public')));
 
 app.get('/api/tokens', (req,res) => {
   const list = ["assets/token.svg"];
