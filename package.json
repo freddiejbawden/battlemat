@@ -10,7 +10,7 @@
     "tsc": "tsc",
     "build": "npm-run-all clean lint tsc copy-assets",
     "dev:start": "npm-run-all build start",
-    "start": "node .",
+    "start": "cd client && npm run build && cd .. && node .",
     "server": "nodemon --watch src -e ts,ejs --exec npm run dev:start",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",

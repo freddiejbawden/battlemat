@@ -23,7 +23,7 @@ if (app.get('env') === 'development') {
   app.use(sessionMiddleware);
 }
 
-app.use(express.static(path.join(__dirname, 'client/build')));
+app.use(express.static(path.join(__dirname, 'client/dist')));
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
 app.get('/api/tokens', (req,res) => {
@@ -37,9 +37,10 @@ app.get('/api/shapes', (req,res) => {
 });
 
 app.get('/', (req, res) => {
+  console.log(__dirname)
   // tslint:disable-next-line:no-console
   console.log(req.sessionID);
-  res.sendFile(path.join(__dirname+'/client/build/index.html'));
+  res.sendFile(path.join(__dirname+'/client/index.html'));
 })
 
 const server = app.listen(port, () => {
