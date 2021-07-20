@@ -39,7 +39,6 @@ const mouseDownHandler = (e) => {
   while(trigger === null && elements.length > 0) {
     // pop off first element
     const element = elements.shift();
-    console.log(element)
     if (!element.getAttribute('data-ignore-click') && element.id !== "grid-canvas") {
       trigger = false;
     }
@@ -48,11 +47,13 @@ const mouseDownHandler = (e) => {
     }
   }
   if (!trigger) {
+    console.log('ignore click')
     return;
   }
   let collided = false
   const gridpos = mousePositionToCentreGrid(e.clientX, e.clientY)
   Object.keys(engine.getGameObjects()).forEach((id) => {
+    console.log(id)
     if (engine.getGameObject(id).checkCollision(gridpos)) {
       collided = true
       engine.getGameObject(id).mouseDown(gridpos)
