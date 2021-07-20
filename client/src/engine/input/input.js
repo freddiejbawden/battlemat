@@ -47,13 +47,11 @@ const mouseDownHandler = (e) => {
     }
   }
   if (!trigger) {
-    console.log('ignore click')
     return;
   }
   let collided = false
   const gridpos = mousePositionToCentreGrid(e.clientX, e.clientY)
   Object.keys(engine.getGameObjects()).forEach((id) => {
-    console.log(id)
     if (engine.getGameObject(id).checkCollision(gridpos)) {
       collided = true
       engine.getGameObject(id).mouseDown(gridpos)

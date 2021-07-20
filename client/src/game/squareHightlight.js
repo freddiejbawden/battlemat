@@ -26,7 +26,6 @@ export default class SquareHighlight extends Sprite {
     if (this.show) {
       this.show = false;
       super.shouldRender = false;
-      console.log('mouseDown')
       eventManager.triggerEvent('place-token', {
         x: Math.floor(getMousePositionCentreGrid().x), 
         y: Math.floor(getMousePositionCentreGrid().y)

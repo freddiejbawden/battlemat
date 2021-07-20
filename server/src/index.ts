@@ -1,22 +1,37 @@
 import express from "express";
 import cookieParser from 'cookie-parser';
 import path from 'path';
-import session from 'express-session';
-import io from 'socket.io';
-
+import session, {SessionData} from 'express-session';
+import { Server, Socket } from 'socket.io';
 import Game, { Entity } from './game/game'
+import { IncomingMessage } from "http";
 
+declare module 'express-session' {
+  interface SessionData {
+    session: string
+  }
+}
+
+interface SessionIncomingMessage extends IncomingMessage {
+  session: SessionData,
+}
+
+interface SessionSocket extends Socket {
+  request: SessionIncomingMessage
+}
 
 const app = express();
 const port = process.env.PORT || 8080;
-const publicPath = path.join(__dirname)
-const verbose = false;
+
 const sessionMiddleware = session({
   secret: 'secret',
   resave: false,
   saveUninitialized: true,
   cookie: { secure: false }
 });
+
+const wrapper = (middleware: any) => (socket: Socket, next: any) => middleware(socket.request, {}, next);
+
 // configure app
 if (app.get('env') === 'development') {
   app.use(cookieParser());
@@ -49,17 +64,15 @@ const server = app.listen(port, () => {
 
 const g = new Game()
 
-const sio = io.listen(server);
+const io = new Server(server);
 
-sio.use((socket, next) => {
-  sessionMiddleware(socket.request, socket.request.res, next);
-});
+io.use(wrapper(sessionMiddleware))
 
 // move this
-sio.sockets.on('connection', (socket) => {
-  const hs = socket.request.session.id;
+io.on('connection', (socket: SessionSocket) => {
+  const s = socket.request.session;
   // tslint:disable-next-line:no-console
-  console.log(`A socket connected with id ${hs}`);
+  console.log(s);
   socket.on('update-entity', (data: EntityUpdate) => {
     // tslint:disable-next-line:no-console
     const entityId = data.id
