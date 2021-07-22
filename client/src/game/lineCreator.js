@@ -24,8 +24,8 @@ class LineCreator extends Sprite {
     })
     eventManager.registerEvent('activate-line-creator')
     eventManager.registerListener('activate-line-creator', () => {
-      console.log('start')
       super.shouldRender = true
+      eventManager.triggerEvent('disable-mouse');
       this.active = true
       this.currentLine = new Line()
     })
@@ -46,6 +46,7 @@ class LineCreator extends Sprite {
         super.shouldRender = false
         addEntity(this.id, {type: 'line', ...this.currentLine})
         this.currentLine = null
+        eventManager.triggerEvent('enable-mouse');
       }
     } 
   }

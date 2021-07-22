@@ -16,6 +16,7 @@ export default class CameraMovement extends GameObject {
     this.currentMousePosition = {x:0, y:0}
     this.isMouseDown = false
     this.mouseDownTimeout = null
+    this.disableMouseMovement = false;
     eventManager.registerListener('mousemoveraw', (e) => {
       this.movement = {
         x: -e.movementX*4 / GRID_SIZE,
@@ -23,15 +24,23 @@ export default class CameraMovement extends GameObject {
       }
     })
     eventManager.registerListener('mousedowngrid', () => {
-      this.isMouseDown = true
-      clearTimeout(this.mouseDownTimeout)
-      this.mouseDownTimeout = setTimeout(() => {
+      if (!this.disableMouseMovement) {
         this.isMouseDown = true
-      }, TIME_UNTIL_MOVE)
+        clearTimeout(this.mouseDownTimeout)
+        this.mouseDownTimeout = setTimeout(() => {
+          this.isMouseDown = true
+        }, TIME_UNTIL_MOVE)
+      }
     })
     eventManager.registerListener('mouseupgrid', () => {
       clearTimeout(this.mouseDownTimeout)
       this.isMouseDown = false
+    })
+    eventManager.registerListener('disable-mouse', () => {
+      this.disableMouseMovement = true;
+    })
+    eventManager.registerListener('enable-mouse', () => {
+      this.disableMouseMovement = false;
     })
   }
 
