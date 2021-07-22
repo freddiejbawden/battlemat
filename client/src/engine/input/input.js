@@ -115,6 +115,8 @@ export const startCapturingInput = () => {
   eventManager.registerEvent('mousemovegrid');
   eventManager.registerEvent('mouseupgrid');
   eventManager.registerEvent('mousemoveraw');
+  eventManager.registerEvent('enable-mouse');
+  eventManager.registerEvent('disable-mouse');
 
 
 }

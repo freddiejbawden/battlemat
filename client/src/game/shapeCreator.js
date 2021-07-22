@@ -22,13 +22,14 @@ class ShapeCreator extends Sprite {
         this.currentPolygon.destroy()
       }
     })
-
     eventManager.registerEvent('activate-shape-creator')
     eventManager.registerListener('activate-shape-creator', () => {
       super.shouldRender = true
       this.active = true
+      eventManager.triggerEvent('disable-mouse')
       this.currentPolygon = new Polygon()
     })
+
   }
   
 
@@ -47,6 +48,7 @@ class ShapeCreator extends Sprite {
         super.shouldRender = false
         addEntity(this.id, {type: 'polygon', ...this.currentPolygon})
         this.currentPolygon = null
+        eventManager.triggerEvent('enable-mouse')
       }
     }
     
