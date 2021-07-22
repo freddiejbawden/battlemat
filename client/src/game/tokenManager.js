@@ -10,6 +10,7 @@ export default class TokenManager extends GameObject {
   }
 
   addToken(pos) {
+    console.log('add token')
     const id = uuidv4();
     addEntity(id, {
       name: id, 

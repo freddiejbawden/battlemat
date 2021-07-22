@@ -6,8 +6,10 @@ const sequenceNumbers = {}
 
 export const socket = io(`ws://${window.location.host}`);
 
-export const connectToServer = () => socket.on('connect', () => 
-    socket.on('game-update', handleIncomingMessage)
+export const connectToServer = () => socket.on('connect', () => {
+  console.log('connect to server')  
+  socket.on('game-update', handleIncomingMessage)
+}
 )
 
 const handleIncomingMessage = (update) => {

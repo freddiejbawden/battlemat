@@ -33,6 +33,7 @@ class Engine {
   }
 
   async start() {
+    console.log('start')
     connectToServer();
     await downloadAssets();
     /* Object.keys(this.gameObjects).forEach(id => {

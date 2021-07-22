@@ -1,3 +1,5 @@
+import { Socket } from "socket.io";
+
 export interface Point2D {
   x: number,
   y: number
@@ -21,7 +23,7 @@ export interface Shape extends NetworkedObject {
 }
 
 class Game {
-  sockets: {[id: string] : SocketIO.Socket};
+  sockets: {[id: string] : Socket};
   // TODO: change this from any to a union type
   entities: {[id: string] : any}
   lastUpdateTime: number;
@@ -46,7 +48,7 @@ class Game {
   }
 }
 
-  addPlayer(socket: SocketIO.Socket) {
+  addPlayer(socket: Socket) {
     if (!this.sockets) {
       this.sockets = {}
     }

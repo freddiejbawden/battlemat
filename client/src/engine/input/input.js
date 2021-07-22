@@ -39,7 +39,6 @@ const mouseDownHandler = (e) => {
   while(trigger === null && elements.length > 0) {
     // pop off first element
     const element = elements.shift();
-    console.log(element)
     if (!element.getAttribute('data-ignore-click') && element.id !== "grid-canvas") {
       trigger = false;
     }

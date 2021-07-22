@@ -4,7 +4,7 @@ import { getMousePositionCentreGrid } from '../engine/input/input';
 
 export default class SquareHighlight extends Sprite {
   constructor() {
-    super('gridHighlight',25,25,'gridHighlight.svg',25,null,{shouldRender: false});
+    super('gridhighlight',25,25,'gridhighlight.svg',25,null,{shouldRender: false});
     this.isMouseDown = false;
     this.show = false
     this.triggerShow = this.triggerShow.bind(this)
@@ -15,6 +15,12 @@ export default class SquareHighlight extends Sprite {
     this.show = true;
     super.shouldRender = true;
   }
+
+  checkCollision(pos) {
+    const absolutePosition = this.getAbsolutePosition()
+    return (Math.floor(pos.x) === absolutePosition.x && Math.floor(pos.y) === absolutePosition.y) 
+  }
+
 
   mouseDown() {
     if (this.show) {
